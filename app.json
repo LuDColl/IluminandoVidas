@@ -26,6 +26,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permita que o APP acesse sua galeria de fotos."
+        }
+      ]
+    ]
   }
 }

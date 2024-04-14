@@ -1,30 +1,17 @@
-import { JSXElementConstructor, ReactElement } from 'react';
-import {
-  Control,
-  FieldPath,
-  FieldValues,
-  RegisterOptions,
-} from 'react-hook-form';
+import { Control, FieldPath, RegisterOptions } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
-
-export type TextInputType = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->(
-  props: TextInputPropsType<TFieldValues, TName>
-) => ReactElement<any, string | JSXElementConstructor<any>>;
+import RegisterRequest from 'screens/register/models/requests/register.request';
 
 export type TextInputPropsType<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<RegisterRequest> = FieldPath<RegisterRequest>
 > = {
   name: TName;
-  control?: Control<TFieldValues>;
+  control: Control<RegisterRequest>;
   rules?: Omit<
-    RegisterOptions<TFieldValues, TName>,
+    RegisterOptions<RegisterRequest, TName>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
-  children?: TextInputLabelProp;
+  label: TextInputLabelProp;
   style?: StyleProp<ViewStyle> | undefined;
 };

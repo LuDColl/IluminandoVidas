@@ -1,73 +1,29 @@
-import { useForm } from 'react-hook-form';
 import { ScrollView, View } from 'react-native';
-import { Appbar, Button, Divider, IconButton } from 'react-native-paper';
-import RegisterRequest from './models/requests/register.request';
-import TextInputComponent from './components/textInput/TextInput.component';
+import { Divider } from 'react-native-paper';
+import useRegister from './Register.hooks';
+import AppbarComponent from './components/appbar/Appbar.component';
+import { bodyStyle, numberRowStyle } from './Register.styles';
+import NumberInputComponent from './components/numberInput/NumberInput.component';
+import MenuComponent from './components/menu/Menu.component';
+import NumbeInputComponent from './components/nameInput/NameInput.component';
+import ButtonComponent from './components/button/Button.component';
 
 export default function RegisterScreen() {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      number: '',
-      name: '',
-    },
-  });
-
-  const onSubmit = (data: RegisterRequest) => console.log(data);
+  const { control, onPress } = useRegister();
 
   return (
     <View style={{ flex: 1 }}>
-      <Appbar.Header>
-        <Appbar.BackAction onPress={() => {}} />
-        <Appbar.Content title="Cadastro" />
-      </Appbar.Header>
-      <View
-        style={{
-          flex: 1,
-          padding: 16,
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}
-      >
+      <AppbarComponent />
+      <View style={bodyStyle}>
         <ScrollView>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-start',
-            }}
-          >
-            <TextInputComponent
-              control={control}
-              name="number"
-              style={{ flex: 1 }}
-              rules={{ required: 'Número obrigatório' }}
-            >
-              Número
-            </TextInputComponent>
-            <IconButton
-              style={{ marginLeft: 16 }}
-              icon="camera"
-              mode="contained"
-              size={36}
-              onPress={() => console.log('Pressed')}
-            />
+          <View style={numberRowStyle}>
+            <NumberInputComponent control={control} style={{ flex: 1 }} />
+            <MenuComponent style={{ marginLeft: 16 }} />
           </View>
-
-          <Divider style={{ marginVertical: 16 }} />
-          <TextInputComponent
-            control={control}
-            name="name"
-            rules={{ required: 'Nome obrigatório' }}
-          >
-            Nome
-          </TextInputComponent>
+          <Divider style={{ marginBottom: 16 }} />
+          <NumbeInputComponent control={control} />
         </ScrollView>
-        <Button
-          mode="elevated"
-          onPress={handleSubmit(onSubmit)}
-          style={{ marginTop: 'auto' }}
-        >
-          Cadastrar
-        </Button>
+        <ButtonComponent onPress={onPress} style={{ marginTop: 'auto' }} />
       </View>
     </View>
   );

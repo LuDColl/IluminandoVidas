@@ -1,15 +1,12 @@
-import { Controller } from 'react-hook-form';
+import { Controller, FieldPath } from 'react-hook-form';
 import { View } from 'react-native';
 import { HelperText, TextInput } from 'react-native-paper';
-import { TextInputType } from './TextInput.types';
+import { TextInputPropsType } from './TextInput.types';
+import RegisterRequest from 'screens/register/models/requests/register.request';
 
-const TextInputComponent: TextInputType = ({
-  name,
-  rules,
-  children,
-  control,
-  style,
-}) => {
+export default function TextInputComponent<
+  TName extends FieldPath<RegisterRequest> = FieldPath<RegisterRequest>
+>({ name, rules, label, control, style }: TextInputPropsType<TName>) {
   return (
     <View style={style}>
       <Controller
@@ -24,7 +21,7 @@ const TextInputComponent: TextInputType = ({
           return (
             <View>
               <TextInput
-                label={children}
+                label={label}
                 mode="outlined"
                 onChangeText={onChange}
                 onBlur={onBlur}
@@ -40,6 +37,4 @@ const TextInputComponent: TextInputType = ({
       />
     </View>
   );
-};
-
-export default TextInputComponent;
+}
