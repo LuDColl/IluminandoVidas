@@ -4,7 +4,13 @@ import {
   FieldPath,
   RegisterOptions,
 } from 'react-hook-form';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  NativeTouchEvent,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { HelperText, TextInput } from 'react-native-paper';
 import RegisterForm from 'screens/register/models/register.form';
 
@@ -19,11 +25,21 @@ type TextInputPropsType<
   >;
   label: string;
   style?: StyleProp<ViewStyle> | undefined;
+  right?: React.ReactNode;
+  editable?: boolean;
 };
 
 export default function TextInputComponent<
   TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
->({ name, rules, label, control, style }: TextInputPropsType<TName>) {
+>({
+  name,
+  rules,
+  label,
+  control,
+  style,
+  right,
+  editable,
+}: TextInputPropsType<TName>) {
   return (
     <View style={style}>
       <Controller
@@ -44,6 +60,8 @@ export default function TextInputComponent<
                 onBlur={onBlur}
                 value={value}
                 error={hasError}
+                right={right}
+                editable={editable}
               />
               <HelperText type="error" visible={hasError}>
                 {error?.message}
