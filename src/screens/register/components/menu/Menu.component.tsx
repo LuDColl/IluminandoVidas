@@ -3,6 +3,7 @@ import { MenuPropsType } from './Menu.types';
 import useMenu from './Menu.hooks';
 import IconButtonComponent from './components/IconButton.component';
 import GalleryMenuItemComponent from './components/galleryMenuItem/GalleryMenuItem.component';
+import CameraMenuItemComponent from './components/cameraMenuItem/CameraMenuItem.component';
 
 export default function MenuComponent({ style }: MenuPropsType) {
   const { visible, closeMenu, openMenu, image, setImage } = useMenu();
@@ -14,7 +15,7 @@ export default function MenuComponent({ style }: MenuPropsType) {
         <IconButtonComponent image={image} style={style} onPress={openMenu} />
       }
     >
-      <Menu.Item leadingIcon="camera" onPress={() => {}} title="Câmera" />
+      <CameraMenuItemComponent setImage={setImage} />
       <GalleryMenuItemComponent setImage={setImage} />
     </Menu>
   );

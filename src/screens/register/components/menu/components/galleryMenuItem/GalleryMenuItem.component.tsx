@@ -1,10 +1,10 @@
 import { Menu } from 'react-native-paper';
-import { GalleryMenuItemPropsType } from './GalleryMenuImte.types';
 import useGalleryMenuItem from './GalleryMenuItem.hooks';
+import { MenuItemPropsType } from '../../types/MenuItem.types';
 
 export default function GalleryMenuItemComponent({
   setImage,
-}: GalleryMenuItemPropsType) {
+}: MenuItemPropsType) {
   const { pickImage } = useGalleryMenuItem(setImage);
   return <Menu.Item leadingIcon="image" onPress={pickImage} title="Galeria" />;
 }
