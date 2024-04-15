@@ -1,7 +1,7 @@
-import { IconButton, Menu } from 'react-native-paper';
+import { Menu } from 'react-native-paper';
 import { MenuPropsType } from './Menu.types';
 import useMenu from './Menu.hooks';
-import IconButtonComponent from './components/anchor/IconButton.component';
+import IconButtonComponent from './components/iconButton/IconButton.component';
 
 export default function MenuComponent({ style }: MenuPropsType) {
   const { visible, closeMenu, openMenu } = useMenu();
