@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import RegisterRequest from './models/requests/register.request';
+import RegisterForm from './models/register.form';
 
 export default function useRegister() {
-  const { control, handleSubmit } = useForm<RegisterRequest>({
+  const { control, handleSubmit } = useForm<RegisterForm>({
     defaultValues: {
       name: '',
       number: '',

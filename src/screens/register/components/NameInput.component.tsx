@@ -1,5 +1,5 @@
 import { InputPropsType } from 'screens/register/Register.types';
-import TextInputComponent from '../textInput/TextInput.component';
+import TextInputComponent from './TextInput.component';
 
 export default function NumbeInputComponent({ control }: InputPropsType) {
   return (

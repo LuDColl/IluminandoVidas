@@ -1,12 +1,12 @@
 import { ScrollView, View } from 'react-native';
 import { Divider } from 'react-native-paper';
 import useRegister from './Register.hooks';
-import AppbarComponent from './components/appbar/Appbar.component';
-import { bodyStyle, numberRowStyle } from './Register.styles';
-import NumberInputComponent from './components/numberInput/NumberInput.component';
-import MenuComponent from './components/menu/Menu.component';
-import NumbeInputComponent from './components/nameInput/NameInput.component';
-import ButtonComponent from './components/button/Button.component';
+import AppbarComponent from './components/Appbar.component';
+import { bodyStyle } from './Register.styles';
+import NumberInputComponent from './components/NumberInput.component';
+import NumbeInputComponent from './components/NameInput.component';
+import ButtonComponent from './components/Button.component';
+import StartDateComponent from './components/StartDate.component';
 
 export default function RegisterScreen() {
   const { control, onPress } = useRegister();
@@ -16,10 +16,8 @@ export default function RegisterScreen() {
       <AppbarComponent />
       <View style={bodyStyle}>
         <ScrollView>
-          <View style={numberRowStyle}>
-            <NumberInputComponent control={control} style={{ flex: 1 }} />
-            <MenuComponent style={{ marginLeft: 16 }} />
-          </View>
+          <NumberInputComponent control={control} style={{ flex: 1 }} />
+          <StartDateComponent control={control} />
           <Divider style={{ marginBottom: 16 }} />
           <NumbeInputComponent control={control} />
         </ScrollView>

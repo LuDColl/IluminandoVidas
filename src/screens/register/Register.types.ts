@@ -1,6 +1,6 @@
 import { Control } from 'react-hook-form';
-import RegisterRequest from 'screens/register/models/requests/register.request';
+import RegisterForm from 'screens/register/models/register.form';
 
 export type InputPropsType = {
-  control: Control<RegisterRequest>;
+  control: Control<RegisterForm>;
 };

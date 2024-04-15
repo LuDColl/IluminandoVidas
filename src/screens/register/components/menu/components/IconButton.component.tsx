@@ -1,5 +1,10 @@
+import { StyleProp, ViewStyle } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import { IconButtonPropsType } from './IconButton.types';
+
+type IconButtonPropsType = {
+  style?: StyleProp<ViewStyle>;
+  onPress: () => void;
+};
 
 export default function IconButtonComponent({
   style,

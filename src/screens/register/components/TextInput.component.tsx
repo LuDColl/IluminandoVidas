@@ -1,11 +1,28 @@
-import { Controller, FieldPath } from 'react-hook-form';
-import { View } from 'react-native';
+import {
+  Control,
+  Controller,
+  FieldPath,
+  RegisterOptions,
+} from 'react-hook-form';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import { HelperText, TextInput } from 'react-native-paper';
-import { TextInputPropsType } from './TextInput.types';
-import RegisterRequest from 'screens/register/models/requests/register.request';
+import RegisterForm from 'screens/register/models/register.form';
+
+type TextInputPropsType<
+  TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
+> = {
+  name: TName;
+  control: Control<RegisterForm>;
+  rules?: Omit<
+    RegisterOptions<RegisterForm, TName>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+  label: string;
+  style?: StyleProp<ViewStyle> | undefined;
+};
 
 export default function TextInputComponent<
-  TName extends FieldPath<RegisterRequest> = FieldPath<RegisterRequest>
+  TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
 >({ name, rules, label, control, style }: TextInputPropsType<TName>) {
   return (
     <View style={style}>

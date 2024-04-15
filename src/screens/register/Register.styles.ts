@@ -6,8 +6,3 @@ export const bodyStyle: StyleProp<ViewStyle> = {
   flexDirection: 'column',
   justifyContent: 'space-between',
 };
-
-export const numberRowStyle: StyleProp<ViewStyle> = {
-  flexDirection: 'row',
-  alignItems: 'flex-start',
-};

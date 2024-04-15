@@ -1,5 +1,10 @@
+import { StyleProp, ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
-import { ButtonPropsType } from './Button.types';
+
+type ButtonPropsType = {
+  onPress: () => void;
+  style?: StyleProp<ViewStyle>;
+};
 
 export default function ButtonComponent({ onPress, style }: ButtonPropsType) {
   return (
