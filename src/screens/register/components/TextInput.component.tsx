@@ -35,7 +35,7 @@ export default function TextInputComponent<
           mode="outlined"
           onChangeText={onChange}
           onBlur={onBlur}
-          value={value}
+          value={value as string}
           error={hasError}
           right={right}
           editable={editable}

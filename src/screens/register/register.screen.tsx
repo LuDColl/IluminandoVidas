@@ -6,10 +6,10 @@ import { bodyStyle } from './Register.styles';
 import NumberInputComponent from './components/NumberInput.component';
 import NumbeInputComponent from './components/NameInput.component';
 import ButtonComponent from './components/Button.component';
-import StartDateComponent from './components/startDate/StartDate.component';
+import StartDateComponent from './components/StartDate.component';
 
 export default function RegisterScreen() {
-  const { control, submit, setStartDate, getStartDate } = useRegister();
+  const { control, submit } = useRegister();
 
   return (
     <View style={{ flex: 1 }}>
@@ -17,11 +17,7 @@ export default function RegisterScreen() {
       <View style={bodyStyle}>
         <ScrollView>
           <NumberInputComponent control={control} style={{ flex: 1 }} />
-          <StartDateComponent
-            control={control}
-            setStartDate={setStartDate}
-            getStartDate={getStartDate}
-          />
+          <StartDateComponent control={control} />
           <Divider style={{ marginBottom: 16 }} />
           <NumbeInputComponent control={control} />
         </ScrollView>
