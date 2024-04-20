@@ -1,5 +1,5 @@
 export default interface RegisterForm {
   number: string;
-  startDate: Date;
+  startDate: string;
   name: string;
 }

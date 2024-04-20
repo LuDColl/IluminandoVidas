@@ -6,7 +6,7 @@ import { bodyStyle } from './Register.styles';
 import NumberInputComponent from './components/NumberInput.component';
 import NumbeInputComponent from './components/NameInput.component';
 import ButtonComponent from './components/Button.component';
-import StartDateComponent from './components/StartDate.component';
+import StartDateComponent from './components/startDate/StartDate.component';
 
 export default function RegisterScreen() {
   const { control, submit } = useRegister();

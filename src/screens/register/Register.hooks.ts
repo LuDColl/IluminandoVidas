@@ -6,7 +6,7 @@ export default function useRegister() {
     defaultValues: {
       name: '',
       number: '',
-      startDate: new Date(),
+      startDate: '',
     },
   });
 
