@@ -4,9 +4,10 @@ import useRegister from './Register.hooks';
 import AppbarComponent from './components/Appbar.component';
 import { bodyStyle } from './Register.styles';
 import NumberInputComponent from './components/NumberInput.component';
-import NumbeInputComponent from './components/NameInput.component';
+import NameInputComponent from './components/NameInput.component';
 import ButtonComponent from './components/Button.component';
-import StartDateComponent from './components/startDate/StartDate.component';
+import StartDateInputComponent from './components/StartDate.component';
+import BirthDateInputComponent from './components/BirthDateInput.component';
 
 export default function RegisterScreen() {
   const { control, submit } = useRegister();
@@ -17,9 +18,10 @@ export default function RegisterScreen() {
       <View style={bodyStyle}>
         <ScrollView>
           <NumberInputComponent control={control} style={{ flex: 1 }} />
-          <StartDateComponent control={control} />
+          <StartDateInputComponent control={control} />
           <Divider style={{ marginBottom: 16 }} />
-          <NumbeInputComponent control={control} />
+          <NameInputComponent control={control} />
+          <BirthDateInputComponent control={control} />
         </ScrollView>
         <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
       </View>

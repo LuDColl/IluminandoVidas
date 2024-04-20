@@ -14,5 +14,4 @@ export type ControlBasePropsType<
     RegisterOptions<RegisterForm, TName>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
-  style?: StyleProp<ViewStyle> | undefined;
 } & InputPropsType;

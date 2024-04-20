@@ -1,5 +1,5 @@
 import { Controller, ControllerRenderProps, FieldPath } from 'react-hook-form';
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import { HelperText } from 'react-native-paper';
 import RegisterForm from '../models/register.form';
 import { ControlBasePropsType } from '../Register.types';
@@ -10,6 +10,7 @@ export type ControlPropsType<
   render: (
     field: { hasError: boolean } & ControllerRenderProps<RegisterForm, TName>
   ) => React.JSX.Element;
+  style?: StyleProp<ViewStyle> | undefined;
 } & ControlBasePropsType<TName>;
 
 export default function ControlComponent<

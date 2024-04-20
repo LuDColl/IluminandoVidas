@@ -3,6 +3,7 @@ import { TextInput } from 'react-native-paper';
 import RegisterForm from 'screens/register/models/register.form';
 import ControlComponent from './Control.component';
 import { ControlBasePropsType } from '../Register.types';
+import { StyleProp, ViewStyle } from 'react-native';
 
 type TextInputPropsType<
   TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
@@ -10,6 +11,7 @@ type TextInputPropsType<
   label: string;
   right?: React.ReactNode;
   editable?: boolean;
+  style?: StyleProp<ViewStyle> | undefined;
 } & ControlBasePropsType<TName>;
 
 export default function TextInputComponent<
