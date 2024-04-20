@@ -1,22 +1,17 @@
 import { Menu } from 'react-native-paper';
-import { MenuPropsType } from './Menu.types';
 import useMenu from './Menu.hooks';
-import IconButtonComponent from './components/IconButton.component';
-import GalleryMenuItemComponent from './components/galleryMenuItem/GalleryMenuItem.component';
-import CameraMenuItemComponent from './components/cameraMenuItem/CameraMenuItem.component';
+import { MenuPropsType } from './Menu.types';
 
-export default function MenuComponent({ style }: MenuPropsType) {
-  const { visible, closeMenu, openMenu, image, setImage } = useMenu();
+export default function MenuComponent({ archor, render }: MenuPropsType) {
+  const menu = useMenu();
+
   return (
     <Menu
-      visible={visible}
-      onDismiss={closeMenu}
-      anchor={
-        <IconButtonComponent image={image} style={style} onPress={openMenu} />
-      }
+      visible={menu.visible}
+      onDismiss={menu.closeMenu}
+      anchor={archor(menu)}
     >
-      <CameraMenuItemComponent setImage={setImage} />
-      <GalleryMenuItemComponent setImage={setImage} />
+      {render(menu)}
     </Menu>
   );
 }

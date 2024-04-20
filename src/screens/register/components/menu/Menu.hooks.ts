@@ -1,21 +1,14 @@
 import { useState } from 'react';
+import { UseMenuReturn } from './Menu.types';
 
-export default function useMenu() {
+export default function useMenu(): UseMenuReturn {
   const [visible, setVisible] = useState(false);
-  const [image, setImage] = useState<string | null>(null);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
-
-  const setImageAndCloseMenu = (image: string) => {
-    closeMenu();
-    setImage(image);
-  };
 
   return {
     visible,
     openMenu,
     closeMenu,
-    image,
-    setImage: setImageAndCloseMenu,
   };
 }

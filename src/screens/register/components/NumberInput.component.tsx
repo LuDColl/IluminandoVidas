@@ -1,7 +1,7 @@
 import { StyleProp, View, ViewStyle } from 'react-native';
 import TextInputComponent from './TextInput.component';
-import MenuComponent from './menu/Menu.component';
 import { InputPropsType } from 'screens/register/Register.types';
+import ImageMenuComponent from './imageMenu/ImageMenu.component';
 
 type NumberInputPropsType = {
   style?: StyleProp<ViewStyle> | undefined;
@@ -20,7 +20,7 @@ export default function NumberInputComponent({
         label="Número"
         style={style}
       />
-      <MenuComponent style={{ marginLeft: 16 }} />
+      <ImageMenuComponent style={{ marginLeft: 16 }} />
     </View>
   );
 }
