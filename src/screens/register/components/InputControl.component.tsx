@@ -1,4 +1,3 @@
-import { TextInput } from 'react-native-paper';
 import ControlComponent from './Control.component';
 import {
   InputControlPropsType,
@@ -8,7 +7,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
 import TextInputComponent from './TextInput.component';
 
-type TextInputType = <TName extends RegisterFieldPathType>(
+type InputControlType = <TName extends RegisterFieldPathType>(
   props: {
     label: string;
     right?: React.ReactNode;
@@ -17,7 +16,7 @@ type TextInputType = <TName extends RegisterFieldPathType>(
   } & InputControlPropsType<TName>
 ) => ReactNode;
 
-const ControlInputComponent: TextInputType = ({
+const InputControlComponent: InputControlType = ({
   name,
   rules,
   label,
@@ -47,4 +46,4 @@ const ControlInputComponent: TextInputType = ({
   );
 };
 
-export default ControlInputComponent;
+export default InputControlComponent;

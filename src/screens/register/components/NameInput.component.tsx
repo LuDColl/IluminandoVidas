@@ -1,9 +1,9 @@
 import { RegisterControlType } from 'screens/register/Register.types';
-import ControlInputComponent from './ControlInput.component';
+import InputControlComponent from './InputControl.component';
 
 const NameInputComponent = ({ control }: RegisterControlType) => {
   return (
-    <ControlInputComponent
+    <InputControlComponent
       control={control}
       name="name"
       rules={{ required: 'Nome obrigatório' }}

@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { Key, ReactNode, useContext } from 'react';
 import ControlComponent from './Control.component';
 import MenuComponent from './Menu.component';
 import { Menu, TextInput } from 'react-native-paper';
 import { View } from 'react-native';
 import TextInputComponent from './TextInput.component';
 import { RegisterContext } from '../Register.contexts';
+import {
+  InputControlPropsType,
+  RegisterFieldPathType,
+} from '../Register.types';
 
 const useSelectInput = () => {
   const { safeArea } = useContext(RegisterContext);
@@ -12,19 +16,30 @@ const useSelectInput = () => {
   return { marginTop };
 };
 
-const SelectInputComponent = ({
+type SelectInputType = <TName extends RegisterFieldPathType, TValue>(
+  props: {
+    label: string;
+    values: TValue[];
+    getKey: (value: TValue) => Key;
+    getText: (value: TValue) => string;
+  } & InputControlPropsType<TName>
+) => ReactNode;
+
+const SelectInputComponent: SelectInputType = ({
   control,
   name,
+  rules,
   label,
   getKey,
   getText,
   values,
-}: any) => {
+}) => {
   const { marginTop } = useSelectInput();
   return (
     <ControlComponent
       control={control}
       name={name}
+      rules={rules}
       render={({ onChange, value }) => (
         <MenuComponent
           style={{ marginTop }}
