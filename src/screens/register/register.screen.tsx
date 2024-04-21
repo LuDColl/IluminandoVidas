@@ -1,5 +1,5 @@
 import { ScrollView, View } from 'react-native';
-import { Divider } from 'react-native-paper';
+import { Divider, ProgressBar } from 'react-native-paper';
 import AppbarComponent from './components/Appbar.component';
 import { bodyStyle } from './Register.styles';
 import NumberInputComponent from './components/NumberInput.component';
@@ -13,12 +13,13 @@ import { RegisterContext } from './Register.contexts';
 import BirthCityComponent from './components/BirthCityInput.component';
 
 export default function RegisterScreen() {
-  const { control, submit, safeArea, setSafeArea, useUf, setValue } =
+  const { control, submit, safeArea, setSafeArea, useUf, setValue, loading } =
     useRegister();
 
   return (
     <View style={{ flex: 1 }}>
       <AppbarComponent />
+      {loading && <ProgressBar indeterminate={true} />}
       <View style={bodyStyle} onLayout={setSafeArea}>
         <RegisterContext.Provider value={{ safeArea, useUf, setValue }}>
           <ScrollView>
