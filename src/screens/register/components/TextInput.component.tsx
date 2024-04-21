@@ -10,6 +10,8 @@ type TextInputType = (props: {
   error?: boolean | undefined;
   right?: ReactNode;
   editable?: boolean | undefined;
+  disabled?: boolean | undefined;
+  left?: ReactNode;
 }) => ReactNode;
 
 const TextInputComponent: TextInputType = ({
@@ -20,6 +22,8 @@ const TextInputComponent: TextInputType = ({
   error,
   right,
   editable,
+  disabled,
+  left,
 }) => (
   <TextInput
     label={label}
@@ -30,6 +34,8 @@ const TextInputComponent: TextInputType = ({
     error={error}
     right={right}
     editable={editable}
+    disabled={disabled}
+    left={left}
   />
 );
 

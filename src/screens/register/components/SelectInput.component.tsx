@@ -1,7 +1,7 @@
 import { Key, ReactNode, useContext } from 'react';
 import ControlComponent from './Control.component';
 import MenuComponent from './Menu.component';
-import { Menu, TextInput } from 'react-native-paper';
+import { ActivityIndicator, Menu, TextInput } from 'react-native-paper';
 import { View } from 'react-native';
 import TextInputComponent from './TextInput.component';
 import { RegisterContext } from '../Register.contexts';
@@ -16,12 +16,13 @@ const useSelectInput = () => {
   return { marginTop };
 };
 
-type SelectInputType = <TName extends RegisterFieldPathType, TValue>(
+type SelectInputType = <TName extends RegisterFieldPathType, TItem>(
   props: {
     label: string;
-    values: TValue[];
-    getKey: (value: TValue) => Key;
-    getText: (value: TValue) => string;
+    items: TItem[] | null;
+    getKey: (item: TItem) => Key;
+    getText: (item: TItem) => string;
+    onChange?: (item: TItem) => void;
   } & InputControlPropsType<TName>
 ) => ReactNode;
 
@@ -32,9 +33,12 @@ const SelectInputComponent: SelectInputType = ({
   label,
   getKey,
   getText,
-  values,
+  items,
+  onChange: valueOnChange,
 }) => {
   const { marginTop } = useSelectInput();
+  const loading = items === null;
+  const disabled = loading || items.length === 0;
   return (
     <ControlComponent
       control={control}
@@ -48,21 +52,25 @@ const SelectInputComponent: SelectInputType = ({
               label={label}
               editable={false}
               value={value}
+              disabled={disabled}
               right={
                 <TextInput.Icon
                   icon={visible ? 'chevron-up' : 'chevron-down'}
+                  animated={true}
                   onPress={openMenu}
+                  disabled={disabled}
                 />
               }
             />
           )}
           render={({ closeMenu }) => (
             <View>
-              {values.map((value: any) => (
+              {items?.map((value: any) => (
                 <Menu.Item
                   key={getKey(value)}
                   title={getText(value)}
                   onPress={() => {
+                    if (valueOnChange) valueOnChange(value);
                     onChange(getText(value));
                     closeMenu();
                   }}

@@ -1,9 +1,8 @@
 import { RegisterControlType } from '../Register.types';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SelectInputComponent from './SelectInput.component';
-
-const instance = axios.create({ baseURL: 'https://brasilapi.com.br/api' });
+import { staticAxios } from '../Register.services';
+import { RegisterContext } from '../Register.contexts';
 
 interface StateResponse {
   id: number;
@@ -12,11 +11,12 @@ interface StateResponse {
 }
 
 const getStates = async () => {
-  const response = await instance.get<StateResponse[]>('/ibge/uf/v1');
+  const response = await staticAxios.get<StateResponse[]>('/ibge/uf/v1');
   return response.data;
 };
 
 const useBirthState = () => {
+  const { useUf } = useContext(RegisterContext);
   const [states, setStates] = useState<StateResponse[]>([]);
 
   useEffect(() => {
@@ -25,19 +25,22 @@ const useBirthState = () => {
 
   const getSigla = (state: StateResponse) => state.sigla;
   const getNome = (state: StateResponse) => state.nome;
-
-  return { states, getSigla, getNome };
+  const onChange = (state: StateResponse) => {
+    useUf?.[1](state.sigla);
+  };
+  return { states, getSigla, getNome, onChange };
 };
 
 const BirthStateComponent = ({ control }: RegisterControlType) => {
-  const { states, getSigla, getNome } = useBirthState();
+  const { states, getSigla, getNome, onChange } = useBirthState();
   return (
     <SelectInputComponent<'birthState', StateResponse>
       name="birthState"
       control={control}
-      values={states}
+      items={states}
       getKey={getSigla}
       getText={getNome}
+      onChange={onChange}
       label="Estado de nascimento"
     />
   );

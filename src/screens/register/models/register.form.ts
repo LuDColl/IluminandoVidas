@@ -4,4 +4,5 @@ export default interface RegisterForm {
   name: string;
   birthDate: string;
   birthState: string;
+  birthCity: string;
 }

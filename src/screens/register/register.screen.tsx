@@ -10,15 +10,17 @@ import BirthDateInputComponent from './components/BirthDateInput.component';
 import BirthStateComponent from './components/BirthState.component';
 import { useRegister } from './Register.hooks';
 import { RegisterContext } from './Register.contexts';
+import BirthCityComponent from './components/BirthCityInput.component';
 
 export default function RegisterScreen() {
-  const { control, submit, safeArea, setSafeArea } = useRegister();
+  const { control, submit, safeArea, setSafeArea, useUf, setValue } =
+    useRegister();
 
   return (
     <View style={{ flex: 1 }}>
       <AppbarComponent />
       <View style={bodyStyle} onLayout={setSafeArea}>
-        <RegisterContext.Provider value={{ safeArea }}>
+        <RegisterContext.Provider value={{ safeArea, useUf, setValue }}>
           <ScrollView>
             <NumberInputComponent control={control} style={{ flex: 1 }} />
             <StartDateInputComponent control={control} />
@@ -27,6 +29,7 @@ export default function RegisterScreen() {
             <BirthDateInputComponent control={control} />
             <Divider style={{ marginBottom: 16 }} />
             <BirthStateComponent control={control} />
+            <BirthCityComponent control={control} />
           </ScrollView>
           <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
         </RegisterContext.Provider>
