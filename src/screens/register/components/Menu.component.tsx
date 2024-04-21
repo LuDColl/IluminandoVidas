@@ -1,39 +1,70 @@
 import { Menu } from 'react-native-paper';
 import { ReactNode, useState } from 'react';
+import {
+  Animated,
+  LayoutChangeEvent,
+  StyleProp,
+  View,
+  ViewStyle,
+} from 'react-native';
 
-type MenuPropsType = {
-  archor: (props: UseMenuReturn) => ReactNode;
-  render: (props: UseMenuReturn) => ReactNode;
-};
-
-type UseMenuReturn = {
+type StateMenuType = {
   visible: boolean;
   openMenu: () => void;
   closeMenu: () => void;
 };
 
-function useMenu(): UseMenuReturn {
+type UseMenuType = () => {
+  width: number;
+  setWidth: (event: LayoutChangeEvent) => void;
+} & StateMenuType;
+
+type MenuPropsType = {
+  archor: (props: StateMenuType) => ReactNode;
+  render: (props: StateMenuType) => ReactNode;
+  anchorPosition?: 'top' | 'bottom' | undefined;
+  contentStyle?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
+};
+
+const useMenu: UseMenuType = () => {
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
+  const [width, setWidth] = useState(0);
+
+  const setWidthByLayout = (event: LayoutChangeEvent) => {
+    const { width } = event.nativeEvent.layout;
+    setWidth(width);
+  };
 
   return {
     visible,
     openMenu,
     closeMenu,
+    width,
+    setWidth: setWidthByLayout,
   };
-}
+};
 
-export default function MenuComponent({ archor, render }: MenuPropsType) {
+export default function MenuComponent({
+  archor,
+  render,
+  anchorPosition,
+  contentStyle,
+}: MenuPropsType) {
   const menu = useMenu();
-
   return (
-    <Menu
-      visible={menu.visible}
-      onDismiss={menu.closeMenu}
-      anchor={archor(menu)}
-    >
-      {render(menu)}
-    </Menu>
+    <View onLayout={menu.setWidth}>
+      <Menu
+        visible={menu.visible}
+        onDismiss={menu.closeMenu}
+        anchor={archor(menu)}
+        anchorPosition={anchorPosition}
+        contentStyle={contentStyle}
+        style={{ minWidth: menu.width }}
+      >
+        {render(menu)}
+      </Menu>
+    </View>
   );
 }

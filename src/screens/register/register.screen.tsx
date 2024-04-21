@@ -8,6 +8,7 @@ import NameInputComponent from './components/NameInput.component';
 import ButtonComponent from './components/Button.component';
 import StartDateInputComponent from './components/StartDate.component';
 import BirthDateInputComponent from './components/BirthDateInput.component';
+import BirthStateComponent from './components/BirthState.component';
 
 export default function RegisterScreen() {
   const { control, submit } = useRegister();
@@ -22,6 +23,7 @@ export default function RegisterScreen() {
           <Divider style={{ marginBottom: 16 }} />
           <NameInputComponent control={control} />
           <BirthDateInputComponent control={control} />
+          <BirthStateComponent control={control} />
         </ScrollView>
         <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
       </View>

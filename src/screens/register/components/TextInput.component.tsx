@@ -24,25 +24,27 @@ const TextInputComponent: TextInputType = ({
   style,
   right,
   editable,
-}) => (
-  <ControlComponent
-    control={control}
-    name={name}
-    rules={rules}
-    style={style}
-    render={({ onChange, onBlur, value, hasError }) => (
-      <TextInput
-        label={label}
-        mode="outlined"
-        onChangeText={onChange}
-        onBlur={onBlur}
-        value={value as string}
-        error={hasError}
-        right={right}
-        editable={editable}
-      />
-    )}
-  />
-);
+}) => {
+  return (
+    <ControlComponent
+      control={control}
+      name={name}
+      rules={rules}
+      style={style}
+      render={({ onChange, onBlur, value, hasError }) => (
+        <TextInput
+          label={label}
+          mode="outlined"
+          onChangeText={onChange}
+          onBlur={onBlur}
+          value={value as string}
+          error={hasError}
+          right={right}
+          editable={editable}
+        />
+      )}
+    />
+  );
+};
 
 export default TextInputComponent;
