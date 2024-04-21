@@ -6,10 +6,12 @@ type ButtonPropsType = {
   style?: StyleProp<ViewStyle>;
 };
 
-export default function ButtonComponent({ onPress, style }: ButtonPropsType) {
+const ButtonComponent = ({ onPress, style }: ButtonPropsType) => {
   return (
     <Button mode="elevated" onPress={onPress} style={style}>
       Cadastrar
     </Button>
   );
-}
+};
+
+export default ButtonComponent;

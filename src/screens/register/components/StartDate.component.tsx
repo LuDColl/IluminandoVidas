@@ -1,7 +1,7 @@
 import { RegisterControlType } from 'screens/register/Register.types';
 import DateInputComponent from './DateInput.component';
 
-export default function StartDateInputComponent({ control }: RegisterControlType) {
+const StartDateInputComponent = ({ control }: RegisterControlType) => {
   return (
     <DateInputComponent
       control={control}
@@ -13,4 +13,6 @@ export default function StartDateInputComponent({ control }: RegisterControlType
       }}
     />
   );
-}
+};
+
+export default StartDateInputComponent;

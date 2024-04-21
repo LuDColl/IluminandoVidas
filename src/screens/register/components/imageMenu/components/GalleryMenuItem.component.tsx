@@ -2,7 +2,7 @@ import { Menu } from 'react-native-paper';
 import { MenuItemPropsType } from '../ImageMenu.types';
 import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker';
 
-function useGalleryMenuItem(setImage: (image: string) => void) {
+const useGalleryMenuItem = (setImage: (image: string) => void) => {
   const pickImage = async () => {
     let result = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.All,
@@ -17,11 +17,11 @@ function useGalleryMenuItem(setImage: (image: string) => void) {
   };
 
   return { pickImage };
-}
+};
 
-export default function GalleryMenuItemComponent({
-  setImage,
-}: MenuItemPropsType) {
+const GalleryMenuItemComponent = ({ setImage }: MenuItemPropsType) => {
   const { pickImage } = useGalleryMenuItem(setImage);
   return <Menu.Item leadingIcon="image" onPress={pickImage} title="Galeria" />;
-}
+};
+
+export default GalleryMenuItemComponent;

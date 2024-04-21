@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 

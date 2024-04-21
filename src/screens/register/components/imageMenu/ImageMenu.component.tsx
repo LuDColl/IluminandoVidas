@@ -7,7 +7,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 
 type ImageMenuPropsType = { style?: StyleProp<ViewStyle> };
 
-function useImageMenu() {
+const useImageMenu = () => {
   const [image, setImage] = useState<string | null>(null);
 
   const setImageAndCloseMenu = (closeMenu: () => void) => (image: string) => {
@@ -19,9 +19,9 @@ function useImageMenu() {
     image,
     setImage: setImageAndCloseMenu,
   };
-}
+};
 
-export default function ImageMenuComponent({ style }: ImageMenuPropsType) {
+const ImageMenuComponent = ({ style }: ImageMenuPropsType) => {
   const { image, setImage } = useImageMenu();
   return (
     <MenuComponent
@@ -36,4 +36,6 @@ export default function ImageMenuComponent({ style }: ImageMenuPropsType) {
       )}
     />
   );
-}
+};
+
+export default ImageMenuComponent;

@@ -3,7 +3,7 @@ import RegisterForm from './models/register.form';
 import { useState } from 'react';
 import { LayoutChangeEvent, LayoutRectangle } from 'react-native';
 
-export default function useRegister() {
+export const useRegister = () => {
   const [safeArea, setSafeArea] = useState<LayoutRectangle>();
 
   const setSafeAreaByEvent = ({ nativeEvent }: LayoutChangeEvent) =>
@@ -20,4 +20,4 @@ export default function useRegister() {
   const submit = handleSubmit((data) => console.log(data));
 
   return { control, submit, setSafeArea: setSafeAreaByEvent, safeArea };
-}
+};

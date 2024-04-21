@@ -5,6 +5,4 @@ interface RegisterContextValue {
   safeArea?: LayoutRectangle;
 }
 
-const RegisterContext = createContext<RegisterContextValue>({});
-
-export default RegisterContext;
+export const RegisterContext = createContext<RegisterContextValue>({});

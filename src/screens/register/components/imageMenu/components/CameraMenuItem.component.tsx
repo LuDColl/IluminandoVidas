@@ -6,7 +6,7 @@ import {
   useCameraPermissions,
 } from 'expo-image-picker';
 
-function useCameraMenuItem(setImage: (image: string) => void) {
+const useCameraMenuItem = (setImage: (image: string) => void) => {
   const [status, requestPermission] = useCameraPermissions();
   const pickImage = async () => {
     if (!status?.granted) {
@@ -27,11 +27,11 @@ function useCameraMenuItem(setImage: (image: string) => void) {
   };
 
   return { pickImage };
-}
+};
 
-export default function CameraMenuItemComponent({
-  setImage,
-}: MenuItemPropsType) {
+const CameraMenuItemComponent = ({ setImage }: MenuItemPropsType) => {
   const { pickImage } = useCameraMenuItem(setImage);
   return <Menu.Item leadingIcon="camera" onPress={pickImage} title="Câmera" />;
-}
+};
+
+export default CameraMenuItemComponent;

@@ -1,26 +1,25 @@
 import { useContext } from 'react';
 import ControlComponent from './Control.component';
 import MenuComponent from './Menu.component';
-import RegisterContext from '../Register.contexts';
 import { Menu, TextInput } from 'react-native-paper';
 import { View } from 'react-native';
 import TextInputComponent from './TextInput.component';
+import { RegisterContext } from '../Register.contexts';
 
 const useSelectInput = () => {
   const { safeArea } = useContext(RegisterContext);
   const marginTop = (safeArea?.y ?? 0) + 12;
-
   return { marginTop };
 };
 
-export default function SelectInputComponent<T>({
+const SelectInputComponent = ({
   control,
   name,
   label,
   getKey,
   getText,
   values,
-}: any) {
+}: any) => {
   const { marginTop } = useSelectInput();
   return (
     <ControlComponent
@@ -60,4 +59,6 @@ export default function SelectInputComponent<T>({
       )}
     />
   );
-}
+};
+
+export default SelectInputComponent;

@@ -1,7 +1,7 @@
 import { RegisterControlType } from 'screens/register/Register.types';
 import ControlInputComponent from './ControlInput.component';
 
-export default function NameInputComponent({ control }: RegisterControlType) {
+const NameInputComponent = ({ control }: RegisterControlType) => {
   return (
     <ControlInputComponent
       control={control}
@@ -10,4 +10,6 @@ export default function NameInputComponent({ control }: RegisterControlType) {
       label="Nome"
     />
   );
-}
+};
+
+export default NameInputComponent;

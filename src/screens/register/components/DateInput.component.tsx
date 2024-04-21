@@ -14,7 +14,7 @@ type InputToInputType = (onChange: InputType) => InputType;
 
 type InputType = (startDate: string | undefined) => void;
 
-function useDateInput() {
+const useDateInput = () => {
   const formatter = new Intl.DateTimeFormat('pt-BR');
   const [date, setDate] = useState<Date>();
 
@@ -38,7 +38,7 @@ function useDateInput() {
     inputToInput,
     date,
   };
-}
+};
 
 type DateInputType = <TName extends RegisterFieldPathType>(
   props: { label: string } & InputControlPropsType<TName>

@@ -6,7 +6,7 @@ import ControlComponent from './Control.component';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import RegisterContext from '../Register.contexts';
+import { RegisterContext } from '../Register.contexts';
 
 const instance = axios.create({ baseURL: 'https://brasilapi.com.br/api' });
 
@@ -34,7 +34,7 @@ const useBirthState = () => {
   return { states, marginTop };
 };
 
-export default function BirthStateComponent({ control }: RegisterControlType) {
+const BirthStateComponent = ({ control }: RegisterControlType) => {
   const { states, marginTop } = useBirthState();
   return (
     <ControlComponent
@@ -75,4 +75,6 @@ export default function BirthStateComponent({ control }: RegisterControlType) {
       )}
     />
   );
-}
+};
+
+export default BirthStateComponent;

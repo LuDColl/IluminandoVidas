@@ -47,13 +47,13 @@ const useMenu: UseMenuType = () => {
   };
 };
 
-export default function MenuComponent({
+const MenuComponent = ({
   archor,
   render,
   anchorPosition,
   contentStyle,
   style,
-}: MenuPropsType) {
+}: MenuPropsType) => {
   const menu = useMenu();
   return (
     <View onLayout={menu.setWidth}>
@@ -69,4 +69,6 @@ export default function MenuComponent({
       </Menu>
     </View>
   );
-}
+};
+
+export default MenuComponent;

@@ -1,6 +1,5 @@
 import { ScrollView, View } from 'react-native';
 import { Divider } from 'react-native-paper';
-import useRegister from './Register.hooks';
 import AppbarComponent from './components/Appbar.component';
 import { bodyStyle } from './Register.styles';
 import NumberInputComponent from './components/NumberInput.component';
@@ -9,7 +8,8 @@ import ButtonComponent from './components/Button.component';
 import StartDateInputComponent from './components/StartDate.component';
 import BirthDateInputComponent from './components/BirthDateInput.component';
 import BirthStateComponent from './components/BirthState.component';
-import RegisterContext from './Register.contexts';
+import { useRegister } from './Register.hooks';
+import { RegisterContext } from './Register.contexts';
 
 export default function RegisterScreen() {
   const { control, submit, safeArea, setSafeArea } = useRegister();
