@@ -1,7 +1,7 @@
-import { ControlPropsType } from 'screens/register/Register.types';
+import { RegisterControlType } from 'screens/register/Register.types';
 import DateInputComponent from './DateInput.component';
 
-export default function StartDateInputComponent({ control }: ControlPropsType) {
+export default function StartDateInputComponent({ control }: RegisterControlType) {
   return (
     <DateInputComponent
       control={control}

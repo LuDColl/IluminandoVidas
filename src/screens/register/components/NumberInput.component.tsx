@@ -1,13 +1,13 @@
 import { StyleProp, View, ViewStyle } from 'react-native';
 import TextInputComponent from './TextInput.component';
-import { ControlPropsType } from 'screens/register/Register.types';
+import { RegisterControlType } from 'screens/register/Register.types';
 import ImageMenuComponent from './imageMenu/ImageMenu.component';
 import { ReactNode } from 'react';
 
 type NumberInputType = (
   props: {
     style?: StyleProp<ViewStyle> | undefined;
-  } & ControlPropsType
+  } & RegisterControlType
 ) => ReactNode;
 
 const NumberInputComponent: NumberInputType = ({ control, style }) => (
