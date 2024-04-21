@@ -1,17 +1,18 @@
 import { Control, FieldPath, RegisterOptions } from 'react-hook-form';
-import { StyleProp, ViewStyle } from 'react-native';
 import RegisterForm from 'screens/register/models/register.form';
 
-export type InputPropsType = {
+export type ControlPropsType = {
   control: Control<RegisterForm>;
 };
 
-export type ControlBasePropsType<
-  TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
-> = {
+export type RegisterFieldPathType = FieldPath<RegisterForm>;
+
+export type RulesInputControlType<TName extends RegisterFieldPathType> = Omit<
+  RegisterOptions<RegisterForm, TName>,
+  'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+>;
+
+export type InputControlPropsType<TName extends RegisterFieldPathType> = {
   name: TName;
-  rules?: Omit<
-    RegisterOptions<RegisterForm, TName>,
-    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
-  >;
-} & InputPropsType;
+  rules?: RulesInputControlType<TName>;
+} & ControlPropsType;

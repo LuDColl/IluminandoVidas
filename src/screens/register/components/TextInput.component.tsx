@@ -1,22 +1,22 @@
-import { FieldPath } from 'react-hook-form';
 import { TextInput } from 'react-native-paper';
-import RegisterForm from 'screens/register/models/register.form';
 import ControlComponent from './Control.component';
-import { ControlBasePropsType } from '../Register.types';
+import {
+  InputControlPropsType,
+  RegisterFieldPathType,
+} from '../Register.types';
 import { StyleProp, ViewStyle } from 'react-native';
+import { ReactNode } from 'react';
 
-type TextInputPropsType<
-  TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
-> = {
-  label: string;
-  right?: React.ReactNode;
-  editable?: boolean;
-  style?: StyleProp<ViewStyle> | undefined;
-} & ControlBasePropsType<TName>;
+type TextInputType = <TName extends RegisterFieldPathType>(
+  props: {
+    label: string;
+    right?: React.ReactNode;
+    editable?: boolean;
+    style?: StyleProp<ViewStyle> | undefined;
+  } & InputControlPropsType<TName>
+) => ReactNode;
 
-export default function TextInputComponent<
-  TName extends FieldPath<RegisterForm> = FieldPath<RegisterForm>
->({
+const TextInputComponent: TextInputType = ({
   name,
   rules,
   label,
@@ -24,25 +24,25 @@ export default function TextInputComponent<
   style,
   right,
   editable,
-}: TextInputPropsType<TName>) {
-  return (
-    <ControlComponent
-      control={control}
-      name={name}
-      rules={rules}
-      style={style}
-      render={({ onChange, onBlur, value, hasError }) => (
-        <TextInput
-          label={label}
-          mode="outlined"
-          onChangeText={onChange}
-          onBlur={onBlur}
-          value={value as string}
-          error={hasError}
-          right={right}
-          editable={editable}
-        />
-      )}
-    />
-  );
-}
+}) => (
+  <ControlComponent
+    control={control}
+    name={name}
+    rules={rules}
+    style={style}
+    render={({ onChange, onBlur, value, hasError }) => (
+      <TextInput
+        label={label}
+        mode="outlined"
+        onChangeText={onChange}
+        onBlur={onBlur}
+        value={value as string}
+        error={hasError}
+        right={right}
+        editable={editable}
+      />
+    )}
+  />
+);
+
+export default TextInputComponent;

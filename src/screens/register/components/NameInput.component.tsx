@@ -1,7 +1,7 @@
-import { InputPropsType } from 'screens/register/Register.types';
+import { ControlPropsType } from 'screens/register/Register.types';
 import TextInputComponent from './TextInput.component';
 
-export default function NameInputComponent({ control }: InputPropsType) {
+export default function NameInputComponent({ control }: ControlPropsType) {
   return (
     <TextInputComponent
       control={control}
