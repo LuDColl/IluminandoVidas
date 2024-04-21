@@ -24,6 +24,7 @@ type MenuPropsType = {
   render: (props: StateMenuType) => ReactNode;
   anchorPosition?: 'top' | 'bottom' | undefined;
   contentStyle?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
+  style?: ViewStyle;
 };
 
 const useMenu: UseMenuType = () => {
@@ -51,6 +52,7 @@ export default function MenuComponent({
   render,
   anchorPosition,
   contentStyle,
+  style,
 }: MenuPropsType) {
   const menu = useMenu();
   return (
@@ -61,7 +63,7 @@ export default function MenuComponent({
         anchor={archor(menu)}
         anchorPosition={anchorPosition}
         contentStyle={contentStyle}
-        style={{ minWidth: menu.width }}
+        style={{ ...style, minWidth: menu.width }}
       >
         {render(menu)}
       </Menu>

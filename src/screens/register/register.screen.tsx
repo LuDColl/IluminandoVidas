@@ -9,23 +9,26 @@ import ButtonComponent from './components/Button.component';
 import StartDateInputComponent from './components/StartDate.component';
 import BirthDateInputComponent from './components/BirthDateInput.component';
 import BirthStateComponent from './components/BirthState.component';
+import RegisterContext from './Register.contexts';
 
 export default function RegisterScreen() {
-  const { control, submit } = useRegister();
+  const { control, submit, safeArea, setSafeArea } = useRegister();
 
   return (
     <View style={{ flex: 1 }}>
       <AppbarComponent />
-      <View style={bodyStyle}>
-        <ScrollView>
-          <NumberInputComponent control={control} style={{ flex: 1 }} />
-          <StartDateInputComponent control={control} />
-          <Divider style={{ marginBottom: 16 }} />
-          <NameInputComponent control={control} />
-          <BirthDateInputComponent control={control} />
-          <BirthStateComponent control={control} />
-        </ScrollView>
-        <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
+      <View style={bodyStyle} onLayout={setSafeArea}>
+        <RegisterContext.Provider value={{ safeArea }}>
+          <ScrollView>
+            <NumberInputComponent control={control} style={{ flex: 1 }} />
+            <StartDateInputComponent control={control} />
+            <Divider style={{ marginBottom: 16 }} />
+            <NameInputComponent control={control} />
+            <BirthDateInputComponent control={control} />
+            <BirthStateComponent control={control} />
+          </ScrollView>
+          <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
+        </RegisterContext.Provider>
       </View>
     </View>
   );
