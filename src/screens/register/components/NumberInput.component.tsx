@@ -1,5 +1,5 @@
 import { StyleProp, View, ViewStyle } from 'react-native';
-import TextInputComponent from './TextInput.component';
+import ControlInputComponent from './ControlInput.component';
 import { RegisterControlType } from 'screens/register/Register.types';
 import ImageMenuComponent from './imageMenu/ImageMenu.component';
 import { ReactNode } from 'react';
@@ -12,7 +12,7 @@ type NumberInputType = (
 
 const NumberInputComponent: NumberInputType = ({ control, style }) => (
   <View style={viewStyle}>
-    <TextInputComponent
+    <ControlInputComponent
       control={control}
       name="number"
       rules={{ required: 'Número obrigatório' }}

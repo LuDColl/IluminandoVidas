@@ -1,5 +1,5 @@
 import MenuComponent from './Menu.component';
-import TextInputComponent from './TextInput.component';
+import ControlInputComponent from './ControlInput.component';
 import { RegisterControlType } from '../Register.types';
 import { Menu, TextInput } from 'react-native-paper';
 import ControlComponent from './Control.component';
@@ -44,7 +44,7 @@ export default function BirthStateComponent({ control }: RegisterControlType) {
         <MenuComponent
           style={{ marginTop }}
           archor={({ visible, openMenu }) => (
-            <TextInputComponent
+            <ControlInputComponent
               control={control}
               label="Estado de nascimento"
               name="birthState"

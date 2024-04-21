@@ -1,50 +1,37 @@
-import { TextInput } from 'react-native-paper';
-import ControlComponent from './Control.component';
-import {
-  InputControlPropsType,
-  RegisterFieldPathType,
-} from '../Register.types';
-import { StyleProp, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
+import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
+import { TextInput } from 'react-native-paper';
+import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 
-type TextInputType = <TName extends RegisterFieldPathType>(
-  props: {
-    label: string;
-    right?: React.ReactNode;
-    editable?: boolean;
-    style?: StyleProp<ViewStyle> | undefined;
-  } & InputControlPropsType<TName>
-) => ReactNode;
+type TextInputType = (props: {
+  label?: TextInputLabelProp | undefined;
+  onChangeText?: (text: string) => void | undefined;
+  onBlur?: () => void | undefined;
+  value?: string | undefined;
+  error?: boolean | undefined;
+  right?: ReactNode;
+  editable?: boolean | undefined;
+}) => ReactNode;
 
 const TextInputComponent: TextInputType = ({
-  name,
-  rules,
   label,
-  control,
-  style,
+  onChangeText,
+  onBlur,
+  value,
+  error,
   right,
   editable,
-}) => {
-  return (
-    <ControlComponent
-      control={control}
-      name={name}
-      rules={rules}
-      style={style}
-      render={({ onChange, onBlur, value, hasError }) => (
-        <TextInput
-          label={label}
-          mode="outlined"
-          onChangeText={onChange}
-          onBlur={onBlur}
-          value={value as string}
-          error={hasError}
-          right={right}
-          editable={editable}
-        />
-      )}
-    />
-  );
-};
+}) => (
+  <TextInput
+    label={label}
+    mode="outlined"
+    onChangeText={onChangeText}
+    onBlur={onBlur}
+    value={value}
+    error={error}
+    right={right}
+    editable={editable}
+  />
+);
 
 export default TextInputComponent;

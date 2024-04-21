@@ -25,6 +25,7 @@ export default function RegisterScreen() {
             <Divider style={{ marginBottom: 16 }} />
             <NameInputComponent control={control} />
             <BirthDateInputComponent control={control} />
+            <Divider style={{ marginBottom: 16 }} />
             <BirthStateComponent control={control} />
           </ScrollView>
           <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
