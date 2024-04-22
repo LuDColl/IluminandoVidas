@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 
@@ -12,6 +13,7 @@ type TextInputType = (props: {
   editable?: boolean | undefined;
   disabled?: boolean | undefined;
   left?: ReactNode;
+  outlineStyle?: StyleProp<ViewStyle>;
 }) => ReactNode;
 
 const TextInputComponent: TextInputType = ({
@@ -24,10 +26,12 @@ const TextInputComponent: TextInputType = ({
   editable,
   disabled,
   left,
+  outlineStyle,
 }) => (
   <TextInput
     label={label}
     mode="outlined"
+    outlineStyle={outlineStyle}
     onChangeText={onChangeText}
     onBlur={onBlur}
     value={value}

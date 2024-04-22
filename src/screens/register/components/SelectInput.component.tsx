@@ -1,14 +1,14 @@
 import { Key, ReactNode, useContext } from 'react';
 import ControlComponent from './Control.component';
 import MenuComponent from './Menu.component';
-import { ActivityIndicator, Menu, TextInput } from 'react-native-paper';
+import { Menu, TextInput } from 'react-native-paper';
 import { View } from 'react-native';
-import TextInputComponent from './TextInput.component';
 import { RegisterContext } from '../Register.contexts';
 import {
   InputControlPropsType,
   RegisterFieldPathType,
 } from '../Register.types';
+import TextInputComponent from 'components/TextInput.component';
 
 const useSelectInput = () => {
   const { safeArea } = useContext(RegisterContext);

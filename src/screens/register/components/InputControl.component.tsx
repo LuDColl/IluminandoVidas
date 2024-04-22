@@ -5,7 +5,7 @@ import {
 } from '../Register.types';
 import { StyleProp, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
-import TextInputComponent from './TextInput.component';
+import TextInputComponent from '../../../components/TextInput.component';
 
 type InputControlType = <TName extends RegisterFieldPathType>(
   props: {

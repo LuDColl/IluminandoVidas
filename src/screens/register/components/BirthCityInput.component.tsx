@@ -3,6 +3,9 @@ import { staticAxios } from '../Register.services';
 import { RegisterControlType } from '../Register.types';
 import SelectInputComponent from './SelectInput.component';
 import { RegisterContext } from '../Register.contexts';
+import { Button } from 'react-native-paper';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'router';
 
 interface CityResponse {
   nome: string;
@@ -34,8 +37,32 @@ const useBirthCity = () => {
   return { cities, getCod, getNome };
 };
 
-const BirthCityComponent = ({ control }: RegisterControlType) => {
+const BirthCityComponent = ({
+  control,
+  navigation,
+}: {
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'Register',
+    undefined
+  >;
+} & RegisterControlType) => {
   const { cities, getCod, getNome } = useBirthCity();
+
+  return (
+    <Button
+      onPress={() => {
+        navigation.navigate('Search', {
+          items: cities!.map((city) => ({
+            key: city.codigo_ibge,
+            title: city.nome,
+          })),
+        });
+      }}
+    >
+      Teste
+    </Button>
+  );
   return (
     <SelectInputComponent<'birthCity', CityResponse>
       name="birthCity"

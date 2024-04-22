@@ -11,8 +11,15 @@ import BirthStateComponent from './components/BirthState.component';
 import { useRegister } from './Register.hooks';
 import { RegisterContext } from './Register.contexts';
 import BirthCityComponent from './components/BirthCityInput.component';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'router';
 
-export default function RegisterScreen() {
+type SearchScreenPropsType = NativeStackScreenProps<
+  RootStackParamList,
+  'Register'
+>;
+
+export default function RegisterScreen({ navigation }: SearchScreenPropsType) {
   const { control, submit, safeArea, setSafeArea, useUf, setValue, loading } =
     useRegister();
 
@@ -30,7 +37,7 @@ export default function RegisterScreen() {
             <BirthDateInputComponent control={control} />
             <Divider style={{ marginBottom: 16 }} />
             <BirthStateComponent control={control} />
-            <BirthCityComponent control={control} />
+            <BirthCityComponent control={control} navigation={navigation} />
           </ScrollView>
           <ButtonComponent onPress={submit} style={{ marginTop: 'auto' }} />
         </RegisterContext.Provider>
