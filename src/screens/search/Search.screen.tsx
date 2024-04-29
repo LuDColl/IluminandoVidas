@@ -4,11 +4,14 @@ import { List } from 'react-native-paper';
 import { SearchScreenPropsType } from './Search.types';
 import { useSearch } from './Search.hooks';
 
-export default function SearchScreen({ route }: SearchScreenPropsType) {
+export default function SearchScreen({
+  route,
+  navigation,
+}: SearchScreenPropsType) {
   const { filtredItems, placeholder, query, setQuery } = useSearch(route);
 
   const mappedItems = filtredItems.map((item) => (
-    <List.Item key={item.key} title={item.title} />
+    <List.Item key={item.key} title={item.title} onPress={navigation.goBack} />
   ));
 
   return (
@@ -17,6 +20,7 @@ export default function SearchScreen({ route }: SearchScreenPropsType) {
         placeholder={placeholder}
         query={query}
         setQuery={setQuery}
+        navigation={navigation}
       />
       <ScrollView style={{ padding: 16 }}>{mappedItems}</ScrollView>
     </View>

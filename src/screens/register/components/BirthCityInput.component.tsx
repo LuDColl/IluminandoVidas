@@ -3,9 +3,11 @@ import { staticAxios } from '../Register.services';
 import { RegisterControlType } from '../Register.types';
 import SelectInputComponent from './SelectInput.component';
 import { RegisterContext } from '../Register.contexts';
-import { Button } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
+import TextInputComponent from 'components/TextInput.component';
+import ControlComponent from './Control.component';
 
 interface CityResponse {
   nome: string;
@@ -48,20 +50,35 @@ const BirthCityComponent = ({
   >;
 } & RegisterControlType) => {
   const { cities, getCod, getNome } = useBirthCity();
+  const disabled = cities === null || cities.length === 0;
 
   return (
-    <Button
-      onPress={() => {
-        navigation.navigate('Search', {
-          items: cities!.map((city) => ({
-            key: city.codigo_ibge,
-            title: city.nome,
-          })),
-        });
-      }}
-    >
-      Teste
-    </Button>
+    <ControlComponent
+      control={control}
+      name="birthCity"
+      render={({ onChange }) => (
+        <TextInputComponent
+          label="Cidade de nascimento"
+          editable={false}
+          disabled={disabled}
+          right={
+            <TextInput.Icon
+              icon="magnify"
+              onPress={() =>
+                navigation.navigate('Search', {
+                  placeholder: 'Cidade de nascimento',
+                  setItem: (item) => onChange(item.title),
+                  items: cities!.map((city) => ({
+                    key: city.codigo_ibge,
+                    title: city.nome,
+                  })),
+                })
+              }
+            />
+          }
+        />
+      )}
+    />
   );
   return (
     <SelectInputComponent<'birthCity', CityResponse>

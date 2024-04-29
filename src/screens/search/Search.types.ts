@@ -16,4 +16,5 @@ export type SearchScreenParamsType = {
   query?: string;
   placeholder?: string;
   items: ItemSearch[];
+  setItem: (item: ItemSearch) => void;
 };
