@@ -5,7 +5,6 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "jsEngine": "hermes",
-
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -34,6 +33,7 @@
           "photosPermission": "Permita que o APP acesse sua galeria de fotos."
         }
       ]
-    ]
+    ],
+    "sdkVersion": "51.0.0"
   }
 }

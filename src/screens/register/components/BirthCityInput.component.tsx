@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { staticAxios } from '../Register.services';
 import { RegisterControlType } from '../Register.types';
-import SelectInputComponent from './SelectInput.component';
 import { RegisterContext } from '../Register.contexts';
-import { Button, TextInput } from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import TextInputComponent from 'components/TextInput.component';
 import ControlComponent from './Control.component';
+import { RouteProp } from '@react-navigation/native';
 
 interface CityResponse {
   nome: string;
@@ -42,12 +42,10 @@ const useBirthCity = () => {
 const BirthCityComponent = ({
   control,
   navigation,
+  route,
 }: {
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'Register',
-    undefined
-  >;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
+  route: RouteProp<RootStackParamList, 'Register'>;
 } & RegisterControlType) => {
   const { cities, getCod, getNome } = useBirthCity();
   const disabled = cities === null || cities.length === 0;
@@ -56,38 +54,35 @@ const BirthCityComponent = ({
     <ControlComponent
       control={control}
       name="birthCity"
-      render={({ onChange }) => (
-        <TextInputComponent
-          label="Cidade de nascimento"
-          editable={false}
-          disabled={disabled}
-          right={
-            <TextInput.Icon
-              icon="magnify"
-              onPress={() =>
-                navigation.navigate('Search', {
-                  placeholder: 'Cidade de nascimento',
-                  setItem: (item) => onChange(item.title),
-                  items: cities!.map((city) => ({
-                    key: city.codigo_ibge,
-                    title: city.nome,
-                  })),
-                })
-              }
-            />
-          }
-        />
-      )}
-    />
-  );
-  return (
-    <SelectInputComponent<'birthCity', CityResponse>
-      name="birthCity"
-      control={control}
-      items={cities}
-      getKey={getCod}
-      getText={getNome}
-      label="Cidade de nascimento"
+      render={({ onChange, value }) => {
+        useEffect(() => {
+          onChange(route.params?.city);
+        }, [route.params?.city]);
+
+        return (
+          <TextInputComponent
+            label="Cidade de nascimento"
+            editable={false}
+            disabled={disabled}
+            value={value}
+            right={
+              <TextInput.Icon
+                icon="magnify"
+                onPress={() => {
+                  if (disabled) return;
+                  navigation.navigate('Search', {
+                    placeholder: 'Cidade de nascimento',
+                    items: cities!.map((city) => ({
+                      key: city.codigo_ibge,
+                      title: city.nome,
+                    })),
+                  });
+                }}
+              />
+            }
+          />
+        );
+      }}
     />
   );
 };

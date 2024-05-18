@@ -11,7 +11,11 @@ export default function SearchScreen({
   const { filtredItems, placeholder, query, setQuery } = useSearch(route);
 
   const mappedItems = filtredItems.map((item) => (
-    <List.Item key={item.key} title={item.title} onPress={navigation.goBack} />
+    <List.Item
+      key={item.key}
+      title={item.title}
+      onPress={() => navigation.navigate('Register', { city: item.title })}
+    />
   ));
 
   return (

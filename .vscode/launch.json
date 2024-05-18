@@ -6,9 +6,11 @@
   "configurations": [
     {
       "name": "Attach to Hermes application",
-      "request": "attach",
+      "cwd": "${workspaceFolder}",
       "type": "reactnativedirect",
-      "cwd": "${workspaceFolder}"
+      "request": "attach",
+      "port": 8081,
+      "sourceMaps": true
     }
   ]
 }
