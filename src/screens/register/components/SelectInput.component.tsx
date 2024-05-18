@@ -44,7 +44,7 @@ const SelectInputComponent: SelectInputType = ({
       control={control}
       name={name}
       rules={rules}
-      render={({ onChange, value }) => (
+      render={({ onChange, value, hasError }) => (
         <MenuComponent
           style={{ marginTop }}
           archor={({ visible, openMenu }) => (
@@ -53,6 +53,7 @@ const SelectInputComponent: SelectInputType = ({
               editable={false}
               value={value}
               disabled={disabled}
+              error={hasError}
               right={
                 <TextInput.Icon
                   icon={visible ? 'chevron-up' : 'chevron-down'}

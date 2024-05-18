@@ -20,6 +20,18 @@ export const useRegister = () => {
       birthCity: '',
       birthDate: '',
       birthState: '',
+      street: '',
+      houseNumber: '',
+      district: '',
+      dad: '',
+      dadBusinnessNumber: '',
+      dadNumber: '',
+      mom: '',
+      momBusinessNumber: '',
+      momNumber: '',
+      period: '',
+      school: '',
+      serie: '',
     },
   });
 

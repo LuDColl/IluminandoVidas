@@ -36,6 +36,7 @@ const BirthStateComponent = ({ control }: RegisterControlType) => {
   return (
     <SelectInputComponent<'birthState', StateResponse>
       name="birthState"
+      rules={{ required: 'Estado de Nascimento Obrigatório' }}
       control={control}
       items={states}
       getKey={getSigla}

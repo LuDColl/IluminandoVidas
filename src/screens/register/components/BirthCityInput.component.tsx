@@ -54,7 +54,8 @@ const BirthCityComponent = ({
     <ControlComponent
       control={control}
       name="birthCity"
-      render={({ onChange, value }) => {
+      rules={{ required: 'Cidade de Nascimento Obrigatória' }}
+      render={({ onChange, value, hasError }) => {
         useEffect(() => {
           onChange(route.params?.city);
         }, [route.params?.city]);
@@ -65,6 +66,7 @@ const BirthCityComponent = ({
             editable={false}
             disabled={disabled}
             value={value}
+            error={hasError}
             right={
               <TextInput.Icon
                 icon="magnify"
