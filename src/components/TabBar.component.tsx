@@ -1,6 +1,11 @@
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import { CommonActions } from '@react-navigation/native';
 import { BottomNavigation } from 'react-native-paper';
+
+export type RootStackParamList = {
+  'Lista Alunos': undefined;
+  Prontuario: { aluno: any };
+};
 
 export default function TabBarComponent({
   navigation,
