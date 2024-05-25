@@ -2,7 +2,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarComponent from 'components/TabBar.component';
 import { View } from 'react-native';
 import { Icon } from 'react-native-paper';
-import ListaAlunos from 'screens/students/ListAlunos.screen';
 import StudentsScreen from 'screens/students/Students.screen';
 
 const Tab = createBottomTabNavigator();
@@ -27,7 +26,7 @@ export default function HomeScreen() {
       />
       <Tab.Screen
         name="students"
-        component={ListaAlunos}
+        component={StudentsScreen}
         options={{
           tabBarLabel: 'Alunos',
           tabBarIcon: ({ color, size }) => {
