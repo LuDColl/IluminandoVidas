@@ -2,8 +2,8 @@ import { DefaultTheme } from '@react-navigation/native';
 import { MD3LightTheme, adaptNavigationTheme } from 'react-native-paper';
 import { MD3Colors, MD3Theme } from 'react-native-paper/lib/typescript/types';
 
-export const primaryColor = '#ff7f00';
-export const onPrimaryColor = '#fff';
+export const primaryColor = 'rgb(255, 127, 0)';
+export const onPrimaryColor = 'rgb(255, 255, 255)';
 
 const generatedLightColors: MD3Colors = {
   primary: 'rgb(151, 73, 0)',
