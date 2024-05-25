@@ -37,23 +37,19 @@ export default function LoginScreen() {
   const login = async () => {
     setLoading(true);
 
-    try {
-      const { data, error } = await supabase
-        .from('tutor')
-        .select('*')
-        .eq('str_usuario', username)
-        .eq('str_senha', password);
+    const { data, error } = await supabase
+      .from('tutor')
+      .select('*')
+      .eq('str_usuario', username)
+      .eq('str_senha', password);
 
-      if (error) return setError('Erro ao fazer login');
-      if (!data || data.length == 0)
-        return setError('Usuário ou senha incorretos');
+    setLoading(false);
+    if (error) return setError('Erro ao fazer login');
 
-      navigation.navigate('Home');
-    } catch (error) {
-      setError('Erro ao fazer login');
-    } finally {
-      setLoading(false);
-    }
+    if (!data || data.length == 0)
+      return setError('Usuário ou senha incorretos');
+
+    navigation.navigate('Home');
   };
 
   return (
