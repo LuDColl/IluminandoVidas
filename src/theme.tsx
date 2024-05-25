@@ -2,15 +2,18 @@ import { DefaultTheme } from '@react-navigation/native';
 import { MD3LightTheme, adaptNavigationTheme } from 'react-native-paper';
 import { MD3Colors, MD3Theme } from 'react-native-paper/lib/typescript/types';
 
+export const primaryColor = '#ff7f00';
+export const onPrimaryColor = '#fff';
+
 const generatedLightColors: MD3Colors = {
   primary: 'rgb(151, 73, 0)',
   onPrimary: 'rgb(255, 255, 255)',
   primaryContainer: 'rgb(255, 219, 199)',
   onPrimaryContainer: 'rgb(49, 19, 0)',
-  secondary: 'rgb(129, 86, 0)',
+  secondary: 'rgb(0, 104, 116)',
   onSecondary: 'rgb(255, 255, 255)',
-  secondaryContainer: 'rgb(255, 221, 177)',
-  onSecondaryContainer: 'rgb(41, 24, 0)',
+  secondaryContainer: 'rgb(151, 240, 255)',
+  onSecondaryContainer: 'rgb(0, 31, 36)',
   tertiary: 'rgb(0, 104, 116)',
   onTertiary: 'rgb(255, 255, 255)',
   tertiaryContainer: 'rgb(151, 240, 255)',

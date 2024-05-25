@@ -7,7 +7,7 @@ import RegisterScreen from 'screens/register/Register.screen';
 import { Stack } from 'router';
 import { theme, LightTheme } from 'theme';
 import HomeScreen from 'screens/home/Home.screen';
-import { LoginScreen } from 'screens/login/login';
+import LoginScreen from 'screens/login/login.screen';
 
 registerTranslation('pt-BR', pt);
 
