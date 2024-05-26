@@ -25,13 +25,22 @@ import RegisterForm from './models/register.form';
 import { supabase } from 'utils/supabase';
 import { getAge } from 'utils/helpers/date.helper';
 import GenderInputComponent from './components/GenderInput.component';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
+import StateResponse from './models/state.response';
+import GenderModel from './models/gender.model';
+
+const genders: GenderModel[] = [
+  { name: 'Masculino', acronym: 'M' },
+  { name: 'Feminino', acronym: 'F' },
+];
 
 export default function RegisterScreen() {
+  const [states, setStates] = useState<StateResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<String | null>(null);
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Register'>>();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Register'>>();
@@ -68,16 +77,97 @@ export default function RegisterScreen() {
   });
 
   useEffect(() => {
-    staticAxios.interceptors.request.use((config) => {
-      setLoading(true);
-      return config;
-    });
+    const { interceptors } = staticAxios;
+    const { request, response } = interceptors;
 
-    staticAxios.interceptors.response.use((config) => {
-      setLoading(false);
-      return config;
-    });
+    request.use(
+      (config) => {
+        setLoading(true);
+        return config;
+      },
+      (error) => {
+        setLoading(false);
+        setError('Erro ao carregar os dados');
+        return Promise.reject(error);
+      }
+    );
+
+    response.use(
+      (config) => {
+        setLoading(false);
+        return config;
+      },
+      (error) => {
+        setLoading(false);
+        setError('Erro ao carregar os dados');
+        return Promise.reject(error);
+      }
+    );
+
+    initData();
+
+    return () => {
+      request.clear();
+      response.clear();
+    };
   }, []);
+
+  const initData = async () => {
+    const { data: states } = await staticAxios.get<StateResponse[]>(
+      '/ibge/uf/v1'
+    );
+
+    setStates(states);
+    if (!params?.id) return;
+
+    setLoading(true);
+
+    const { error, data } = await supabase
+      .from('aluno')
+      .select(
+        'str_nomealuno, dte_nascimento, str_sexo, str_endereco, int_numeroend, str_bairro, str_natestado, str_natcidade, str_escola, str_serie, str_periodo, str_nomemae, str_enderecocomercialmae, str_nomepai, str_enderecocomercialpai, bit_ativo'
+      )
+      .eq('id_aluno', params?.id);
+
+    setLoading(false);
+    if (error) return setError('Erro ao carregar os dados');
+
+    if (!data || data.length == 0) return setError('Erro ao carregar os dados');
+
+    const [student] = data;
+    const { str_natestado, str_sexo } = student;
+    form.setValue('name', student.str_nomealuno);
+    form.setValue('genderAcronym', str_sexo);
+    form.setValue('street', student.str_endereco);
+    form.setValue('houseNumber', `${student.int_numeroend}`);
+    form.setValue('district', student.str_bairro);
+    form.setValue('birthUf', str_natestado ?? '');
+    form.setValue('birthCity', student.str_natcidade ?? '');
+    form.setValue('school', student.str_escola ?? '');
+    form.setValue('serie', student.str_serie ?? '');
+    form.setValue('period', student.str_periodo ?? '');
+    form.setValue('mom', student.str_nomemae ?? '');
+    form.setValue('dad', student.str_nomepai ?? '');
+    form.setValue('momBusinessAddress', student.str_enderecocomercialmae ?? '');
+
+    const gender = genders.find((gender) => (gender.acronym = str_sexo));
+    form.setValue('gender', gender?.name ?? '');
+
+    const dte_nascimento: string = student.dte_nascimento;
+    const [year, month, day] = dte_nascimento.split('-');
+    const birthDate = `${day}/${month}/${year}`;
+    form.setValue('birthDate', birthDate);
+
+    form.setValue(
+      'dadBusinnessAddress',
+      student.str_enderecocomercialpai ?? ''
+    );
+
+    if (str_natestado) {
+      const state = states.find((state) => state.sigla === str_natestado);
+      form.setValue('birthState', state?.nome ?? '');
+    }
+  };
 
   const submit = form.handleSubmit(async (data) => {
     const [day, month, year] = data.birthDate.split('/');
@@ -127,10 +217,10 @@ export default function RegisterScreen() {
               <StartDateInputComponent />
               <Divider style={styles.divider} />
               <NameInputComponent />
-              <GenderInputComponent />
+              <GenderInputComponent genders={genders} />
               <BirthDateInputComponent />
               <Divider style={styles.divider} />
-              <BirthStateInputComponent />
+              <BirthStateInputComponent states={states} />
               <BirthCityComponent />
               <Divider style={styles.divider} />
               <StreetInputComponent />

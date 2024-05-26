@@ -1,7 +1,7 @@
 import { DatePickerInput } from 'react-native-paper-dates';
 import ControlComponent from './Control.component';
 import { useState } from 'react';
-import { FieldPath, RegisterOptions, useFormContext } from 'react-hook-form';
+import { FieldPath, RegisterOptions } from 'react-hook-form';
 import RegisterForm from '../models/register.form';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 
@@ -44,20 +44,29 @@ export default function DateInputComponent<
     <ControlComponent
       rules={rules}
       name={name}
-      render={({ onChange, onBlur, disabled, hasError }) => (
-        <DatePickerInput
-          mode="outlined"
-          locale="pt-BR"
-          label={label}
-          hasError={hasError}
-          value={date}
-          onBlur={onBlur}
-          onChange={inputToDate(onChange)}
-          onChangeText={inputToInput(onChange)}
-          disabled={disabled}
-          inputMode="start"
-        />
-      )}
+      render={({ onChange, onBlur, disabled, hasError, value }) => {
+        let initalDate: Date | undefined;
+
+        if (value?.length == 10) {
+          const [day, month, year] = value.split('/');
+          initalDate = new Date(+year, +month - 1, +day);
+        }
+
+        return (
+          <DatePickerInput
+            mode="outlined"
+            locale="pt-BR"
+            label={label}
+            hasError={hasError}
+            value={date ?? initalDate}
+            onBlur={onBlur}
+            onChange={inputToDate(onChange)}
+            onChangeText={inputToInput(onChange)}
+            disabled={disabled}
+            inputMode="start"
+          />
+        );
+      }}
     />
   );
 }
