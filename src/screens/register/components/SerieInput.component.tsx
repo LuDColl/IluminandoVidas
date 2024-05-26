@@ -1,15 +1,11 @@
-import { RegisterControlType } from 'screens/register/Register.types';
 import InputControlComponent from './InputControl.component';
 
-const SerieInputComponent = ({ control }: RegisterControlType) => {
+export default function SerieInputComponent() {
   return (
     <InputControlComponent
-      control={control}
       name="serie"
       rules={{ required: 'Série obrigatória' }}
       label="Série"
     />
   );
-};
-
-export default SerieInputComponent;
+}

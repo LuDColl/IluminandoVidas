@@ -1,10 +1,8 @@
-import { RegisterControlType } from 'screens/register/Register.types';
 import DateInputComponent from './DateInput.component';
 
-const StartDateInputComponent = ({ control }: RegisterControlType) => {
+export default function StartDateInputComponent() {
   return (
     <DateInputComponent
-      control={control}
       label="Data de início"
       name="startDate"
       rules={{
@@ -13,6 +11,4 @@ const StartDateInputComponent = ({ control }: RegisterControlType) => {
       }}
     />
   );
-};
-
-export default StartDateInputComponent;
+}

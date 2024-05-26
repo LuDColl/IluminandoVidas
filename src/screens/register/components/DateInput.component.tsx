@@ -1,54 +1,47 @@
 import { DatePickerInput } from 'react-native-paper-dates';
 import ControlComponent from './Control.component';
-import {
-  InputControlPropsType,
-  RegisterFieldPathType,
-} from 'screens/register/Register.types';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
+import { FieldPath, RegisterOptions, useFormContext } from 'react-hook-form';
+import RegisterForm from '../models/register.form';
+import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 
-type InputToDateType = (
-  onChange: InputType
-) => (date: Date | undefined) => void;
+const formatter = new Intl.DateTimeFormat('pt-BR');
 
-type InputToInputType = (onChange: InputType) => InputType;
-
-type InputType = (startDate: string | undefined) => void;
-
-const useDateInput = () => {
-  const formatter = new Intl.DateTimeFormat('pt-BR');
+export default function DateInputComponent<
+  TName extends FieldPath<RegisterForm>
+>({
+  rules,
+  label,
+  name,
+}: {
+  rules?: Omit<
+    RegisterOptions<RegisterForm, TName>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+  name: TName;
+  label?: TextInputLabelProp;
+}) {
   const [date, setDate] = useState<Date>();
 
-  const inputToDate: InputToDateType = (onChange) => (date) => {
-    setDate(date);
-    const startdate = formatter.format(date);
-    onChange(startdate);
-  };
+  const inputToDate =
+    (onChange: (...event: any[]) => void) => (date: Date | undefined) => {
+      setDate(date);
+      const startdate = formatter.format(date);
+      onChange(startdate);
+    };
 
-  const inputToInput: InputToInputType = (onChange) => (startDate) => {
-    onChange(startDate);
+  const inputToInput =
+    (onChange: (...event: any[]) => void) => (text: string | undefined) => {
+      onChange(text);
+      if (text?.length != 10) return;
 
-    if (startDate?.length != 10) return;
-    const [day, month, year] = startDate.split('/');
-    const date = new Date(+year, +month - 1, +day);
-    setDate(date);
-  };
+      const [day, month, year] = text.split('/');
+      const date = new Date(+year, +month - 1, +day);
+      setDate(date);
+    };
 
-  return {
-    inputToDate,
-    inputToInput,
-    date,
-  };
-};
-
-type DateInputType = <TName extends RegisterFieldPathType>(
-  props: { label: string } & InputControlPropsType<TName>
-) => ReactNode;
-
-const DateInputComponent: DateInputType = ({ control, rules, label, name }) => {
-  const { date, inputToDate, inputToInput } = useDateInput();
   return (
     <ControlComponent
-      control={control}
       rules={rules}
       name={name}
       render={({ onChange, onBlur, disabled, hasError }) => (
@@ -67,6 +60,4 @@ const DateInputComponent: DateInputType = ({ control, rules, label, name }) => {
       )}
     />
   );
-};
-
-export default DateInputComponent;
+}

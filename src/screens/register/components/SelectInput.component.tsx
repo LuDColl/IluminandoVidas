@@ -2,52 +2,48 @@ import { Key, ReactNode, useContext } from 'react';
 import ControlComponent from './Control.component';
 import MenuComponent from './Menu.component';
 import { Menu, TextInput } from 'react-native-paper';
-import { View } from 'react-native';
-import { RegisterContext } from '../Register.contexts';
-import {
-  InputControlPropsType,
-  RegisterFieldPathType,
-} from '../Register.types';
+import { RegisterContext } from '../register.context';
 import TextInputComponent from 'components/TextInput.component';
+import { FieldPath, RegisterOptions } from 'react-hook-form';
+import RegisterForm from '../models/register.form';
+import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 
-const useSelectInput = () => {
-  const { safeArea } = useContext(RegisterContext);
-  const marginTop = (safeArea?.y ?? 0) + 12;
-  return { marginTop };
-};
-
-type SelectInputType = <TName extends RegisterFieldPathType, TItem>(
-  props: {
-    label: string;
-    items: TItem[] | null;
-    getKey: (item: TItem) => Key;
-    getText: (item: TItem) => string;
-    onChange?: (item: TItem) => void;
-  } & InputControlPropsType<TName>
-) => ReactNode;
-
-const SelectInputComponent: SelectInputType = ({
-  control,
+export default function SelectInputComponent<
+  TName extends FieldPath<RegisterForm>,
+  TItem
+>({
   name,
   rules,
   label,
   getKey,
   getText,
   items,
-  onChange: valueOnChange,
-}) => {
-  const { marginTop } = useSelectInput();
-  const loading = items === null;
+  onChange: onItemChange,
+}: {
+  name: TName;
+  rules?: Omit<
+    RegisterOptions<RegisterForm, TName>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+  label?: TextInputLabelProp;
+  items?: TItem[];
+  getKey: (item: TItem) => Key | null | undefined;
+  getText: (item: TItem) => ReactNode;
+  onChange?: (item: TItem) => void;
+}) {
+  const { safeArea } = useContext(RegisterContext);
+  const marginTop = (safeArea?.y ?? 0) + 12;
+  const loading = !items;
   const disabled = loading || items.length === 0;
+
   return (
     <ControlComponent
-      control={control}
       name={name}
       rules={rules}
       render={({ onChange, value, hasError }) => (
         <MenuComponent
           style={{ marginTop }}
-          archor={({ visible, openMenu }) => (
+          anchor={({ visible, openMenu }) => (
             <TextInputComponent
               label={label}
               editable={false}
@@ -65,24 +61,22 @@ const SelectInputComponent: SelectInputType = ({
             />
           )}
           render={({ closeMenu }) => (
-            <View>
-              {items?.map((value: any) => (
+            <>
+              {items?.map((item: any) => (
                 <Menu.Item
-                  key={getKey(value)}
-                  title={getText(value)}
+                  key={getKey(item)}
+                  title={getText(item)}
                   onPress={() => {
-                    if (valueOnChange) valueOnChange(value);
-                    onChange(getText(value));
+                    if (onItemChange) onItemChange(item);
+                    onChange(getText(item));
                     closeMenu();
                   }}
                 />
               ))}
-            </View>
+            </>
           )}
         />
       )}
     />
   );
-};
-
-export default SelectInputComponent;
+}

@@ -7,11 +7,6 @@ import { RootStackParamList } from 'router';
 import { supabase } from 'utils/supabase';
 import { primaryColor } from 'theme';
 
-type LoginScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
-
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -20,8 +15,10 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const navigation = useNavigation<LoginScreenNavigationProp>();
   const theme = useTheme();
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Login'>>();
 
   useEffect(() => {
     const logoUri = '../../../assets/images/logo.jpg';

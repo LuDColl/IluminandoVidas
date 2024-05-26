@@ -1,63 +1,50 @@
-import { useContext, useEffect, useState } from 'react';
-import { staticAxios } from '../Register.services';
-import { RegisterControlType } from '../Register.types';
-import { RegisterContext } from '../Register.contexts';
+import { useEffect, useState } from 'react';
+import { staticAxios } from '../register.services';
 import { TextInput } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import TextInputComponent from 'components/TextInput.component';
 import ControlComponent from './Control.component';
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useFormContext } from 'react-hook-form';
+import RegisterForm from '../models/register.form';
 
 interface CityResponse {
   nome: string;
   codigo_ibge: number;
 }
 
-const getCities = async (uf: string) => {
-  const response = await staticAxios.get<CityResponse[]>(
-    `/ibge/municipios/v1/${uf}?providers=dados-abertos-br,gov,wikipedia`
-  );
-  return response.data;
-};
-
-const useBirthCity = () => {
-  const { useUf, setValue } = useContext(RegisterContext);
-  const uf = useUf?.[0];
+export default function BirthCityComponent() {
+  const route = useRoute<RouteProp<RootStackParamList, 'Register'>>();
   const [cities, setCities] = useState<CityResponse[] | null>([]);
+  const { watch } = useFormContext<RegisterForm>();
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Register'>>();
 
   useEffect(() => {
-    if (!uf) return;
-    if (setValue) setValue('birthCity', '');
-    setCities(null);
-    getCities(uf).then(setCities);
-  }, [uf]);
+    const subscription = watch(async ({ birthUf }, { name }) => {
+      if (name != 'birthUf') return;
 
-  const getCod = (city: CityResponse) => city.codigo_ibge;
-  const getNome = (city: CityResponse) => city.nome;
+      const value = await staticAxios.get<CityResponse[]>(
+        `/ibge/municipios/v1/${birthUf}?providers=dados-abertos-br,gov,wikipedia`
+      );
 
-  return { cities, getCod, getNome };
-};
+      setCities(value.data);
+    });
 
-const BirthCityComponent = ({
-  control,
-  navigation,
-  route,
-}: {
-  navigation: NativeStackNavigationProp<RootStackParamList, 'Register'>;
-  route: RouteProp<RootStackParamList, 'Register'>;
-} & RegisterControlType) => {
-  const { cities, getCod, getNome } = useBirthCity();
+    return subscription.unsubscribe;
+  }, []);
+
   const disabled = cities === null || cities.length === 0;
 
   return (
     <ControlComponent
-      control={control}
       name="birthCity"
       rules={{ required: 'Cidade de Nascimento Obrigatória' }}
       render={({ onChange, value, hasError }) => {
         useEffect(() => {
-          onChange(route.params?.city);
+          onChange(route.params?.city ?? '');
         }, [route.params?.city]);
 
         return (
@@ -87,6 +74,4 @@ const BirthCityComponent = ({
       }}
     />
   );
-};
-
-export default BirthCityComponent;
+}

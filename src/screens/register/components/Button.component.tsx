@@ -1,17 +1,16 @@
-import { StyleProp, ViewStyle } from 'react-native';
+import { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
 import { Button } from 'react-native-paper';
 
-type ButtonPropsType = {
-  onPress: () => void;
-  style?: StyleProp<ViewStyle>;
-};
-
-const ButtonComponent = ({ onPress, style }: ButtonPropsType) => {
+export default function ButtonComponent({
+  onPress,
+  style,
+}: {
+  onPress?: (e: GestureResponderEvent) => void;
+  style?: StyleProp<ViewStyle> | undefined;
+}) {
   return (
     <Button mode="elevated" onPress={onPress} style={style}>
       Cadastrar
     </Button>
   );
-};
-
-export default ButtonComponent;
+}
