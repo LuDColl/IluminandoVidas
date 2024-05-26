@@ -1,13 +1,17 @@
 import { Menu } from 'react-native-paper';
-import { MenuItemPropsType } from '../ImageMenu.types';
 import {
   MediaTypeOptions,
   launchCameraAsync,
   useCameraPermissions,
 } from 'expo-image-picker';
 
-const useCameraMenuItem = (setImage: (image: string) => void) => {
+export default function CameraMenuItemComponent({
+  setImage,
+}: {
+  setImage: (image: string) => void;
+}) {
   const [status, requestPermission] = useCameraPermissions();
+
   const pickImage = async () => {
     if (!status?.granted) {
       const response = await requestPermission();
@@ -26,12 +30,5 @@ const useCameraMenuItem = (setImage: (image: string) => void) => {
     setImage(result.assets[0].uri);
   };
 
-  return { pickImage };
-};
-
-const CameraMenuItemComponent = ({ setImage }: MenuItemPropsType) => {
-  const { pickImage } = useCameraMenuItem(setImage);
   return <Menu.Item leadingIcon="camera" onPress={pickImage} title="Câmera" />;
-};
-
-export default CameraMenuItemComponent;
+}

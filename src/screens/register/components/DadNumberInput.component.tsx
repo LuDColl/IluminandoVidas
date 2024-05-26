@@ -1,15 +1,11 @@
-import { RegisterControlType } from 'screens/register/Register.types';
 import InputControlComponent from './InputControl.component';
 
-const DadNumberInputComponent = ({ control }: RegisterControlType) => {
+export default function DadNumberInputComponent() {
   return (
     <InputControlComponent
-      control={control}
       name="dadNumber"
       rules={{ required: 'Número do Pai obrigatório' }}
       label="Número"
     />
   );
-};
-
-export default DadNumberInputComponent;
+}

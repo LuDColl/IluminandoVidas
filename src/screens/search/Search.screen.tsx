@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import AppBarComponent from './components/AppBar.component';
 import { List } from 'react-native-paper';
 import { SearchScreenPropsType } from './Search.types';
@@ -19,7 +19,7 @@ export default function SearchScreen({
   ));
 
   return (
-    <View>
+    <>
       <AppBarComponent
         placeholder={placeholder}
         query={query}
@@ -27,6 +27,6 @@ export default function SearchScreen({
         navigation={navigation}
       />
       <ScrollView style={{ padding: 16 }}>{mappedItems}</ScrollView>
-    </View>
+    </>
   );
 }

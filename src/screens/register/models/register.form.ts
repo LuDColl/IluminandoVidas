@@ -3,9 +3,12 @@ export default interface RegisterForm {
   startDate: string;
 
   name: string;
+  gender: string;
+  genderAcronym: string;
   birthDate: string;
 
   birthState: string;
+  birthUf: string;
   birthCity: string;
 
   street: string;
@@ -18,9 +21,9 @@ export default interface RegisterForm {
 
   mom: string;
   momNumber: string;
-  momBusinessNumber: string;
+  momBusinessAddress: string;
 
   dad: string;
   dadNumber: string;
-  dadBusinnessNumber: string;
+  dadBusinnessAddress: string;
 }

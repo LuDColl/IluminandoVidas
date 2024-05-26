@@ -1,22 +1,9 @@
 import { ReactNode } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 
-type TextInputType = (props: {
-  label?: TextInputLabelProp | undefined;
-  onChangeText?: (text: string) => void | undefined;
-  onBlur?: () => void | undefined;
-  value?: string | undefined;
-  error?: boolean | undefined;
-  right?: ReactNode;
-  editable?: boolean | undefined;
-  disabled?: boolean | undefined;
-  left?: ReactNode;
-  outlineStyle?: StyleProp<ViewStyle>;
-}) => ReactNode;
-
-const TextInputComponent: TextInputType = ({
+export default function TextInputComponent({
   label,
   onChangeText,
   onBlur,
@@ -27,20 +14,34 @@ const TextInputComponent: TextInputType = ({
   disabled,
   left,
   outlineStyle,
-}) => (
-  <TextInput
-    label={label}
-    mode="outlined"
-    outlineStyle={outlineStyle}
-    onChangeText={onChangeText}
-    onBlur={onBlur}
-    value={value}
-    error={error}
-    right={right}
-    editable={editable}
-    disabled={disabled}
-    left={left}
-  />
-);
-
-export default TextInputComponent;
+  style,
+}: {
+  label?: TextInputLabelProp;
+  onChangeText?: ((text: string) => void) | undefined;
+  onBlur?: (args: any) => void;
+  value?: string;
+  error?: boolean;
+  right?: ReactNode;
+  editable?: boolean | undefined;
+  disabled?: boolean;
+  left?: ReactNode;
+  outlineStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
+}) {
+  return (
+    <TextInput
+      label={label}
+      mode="outlined"
+      outlineStyle={outlineStyle}
+      onChangeText={onChangeText}
+      onBlur={onBlur}
+      value={value}
+      error={error}
+      right={right}
+      editable={editable}
+      disabled={disabled}
+      left={left}
+      style={style}
+    />
+  );
+}

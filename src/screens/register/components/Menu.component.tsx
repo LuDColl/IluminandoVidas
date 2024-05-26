@@ -1,74 +1,40 @@
 import { Menu } from 'react-native-paper';
 import { ReactNode, useState } from 'react';
-import {
-  Animated,
-  LayoutChangeEvent,
-  StyleProp,
-  View,
-  ViewStyle,
-} from 'react-native';
+import { Animated, StyleProp, View, ViewStyle } from 'react-native';
 
-type StateMenuType = {
-  visible: boolean;
-  openMenu: () => void;
-  closeMenu: () => void;
-};
-
-type UseMenuType = () => {
-  width: number;
-  setWidth: (event: LayoutChangeEvent) => void;
-} & StateMenuType;
-
-type MenuPropsType = {
-  archor: (props: StateMenuType) => ReactNode;
-  render: (props: StateMenuType) => ReactNode;
-  anchorPosition?: 'top' | 'bottom' | undefined;
+export default function MenuComponent({
+  anchor,
+  render,
+  anchorPosition,
+  contentStyle,
+  style,
+}: {
+  anchor: (menu: {
+    visible: boolean;
+    openMenu: () => void;
+  }) => ReactNode | { x: number; y: number };
+  render: (menu: { closeMenu: () => void }) => ReactNode;
+  anchorPosition?: 'top' | 'bottom';
   contentStyle?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
   style?: ViewStyle;
-};
-
-const useMenu: UseMenuType = () => {
+}) {
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
   const [width, setWidth] = useState(0);
 
-  const setWidthByLayout = (event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout;
-    setWidth(width);
-  };
-
-  return {
-    visible,
-    openMenu,
-    closeMenu,
-    width,
-    setWidth: setWidthByLayout,
-  };
-};
-
-const MenuComponent = ({
-  archor,
-  render,
-  anchorPosition,
-  contentStyle,
-  style,
-}: MenuPropsType) => {
-  const menu = useMenu();
   return (
-    <View onLayout={menu.setWidth}>
+    <View onLayout={({ nativeEvent }) => setWidth(nativeEvent.layout.width)}>
       <Menu
-        visible={menu.visible}
-        onDismiss={menu.closeMenu}
-        anchor={archor(menu)}
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={anchor({ visible, openMenu })}
         anchorPosition={anchorPosition}
         contentStyle={contentStyle}
-        style={{ ...style, minWidth: menu.width }}
+        style={{ ...style, minWidth: width }}
       >
-        {render(menu)}
+        {render({ closeMenu })}
       </Menu>
     </View>
   );
-};
-
-export default MenuComponent;
+}

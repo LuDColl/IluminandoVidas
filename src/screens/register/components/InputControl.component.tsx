@@ -1,33 +1,33 @@
 import ControlComponent from './Control.component';
-import {
-  InputControlPropsType,
-  RegisterFieldPathType,
-} from '../Register.types';
-import { StyleProp, ViewStyle } from 'react-native';
-import { ReactNode } from 'react';
 import TextInputComponent from '../../../components/TextInput.component';
+import { FieldPath, RegisterOptions } from 'react-hook-form';
+import RegisterForm from '../models/register.form';
+import { StyleProp, ViewStyle } from 'react-native';
+import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
+import { ReactNode } from 'react';
 
-type InputControlType = <TName extends RegisterFieldPathType>(
-  props: {
-    label: string;
-    right?: React.ReactNode;
-    editable?: boolean;
-    style?: StyleProp<ViewStyle> | undefined;
-  } & InputControlPropsType<TName>
-) => ReactNode;
-
-const InputControlComponent: InputControlType = ({
+export default function InputControlComponent<
+  TName extends FieldPath<RegisterForm>
+>({
   name,
   rules,
   label,
-  control,
   style,
   right,
   editable,
-}) => {
+}: {
+  name: TName;
+  rules?: Omit<
+    RegisterOptions<RegisterForm, TName>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+  style?: StyleProp<ViewStyle>;
+  label?: TextInputLabelProp;
+  right?: ReactNode;
+  editable?: boolean | undefined;
+}) {
   return (
     <ControlComponent
-      control={control}
       name={name}
       rules={rules}
       style={style}
@@ -44,6 +44,4 @@ const InputControlComponent: InputControlType = ({
       )}
     />
   );
-};
-
-export default InputControlComponent;
+}
