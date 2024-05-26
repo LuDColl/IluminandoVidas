@@ -25,6 +25,7 @@ export default function BirthCityComponent() {
   useEffect(() => {
     const subscription = watch(async ({ birthUf }, { name }) => {
       if (name != 'birthUf') return;
+      if (!birthUf) return;
 
       const value = await staticAxios.get<CityResponse[]>(
         `/ibge/municipios/v1/${birthUf}?providers=dados-abertos-br,gov,wikipedia`

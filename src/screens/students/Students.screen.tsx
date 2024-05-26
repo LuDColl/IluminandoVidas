@@ -58,16 +58,20 @@ export default function StudentsScreen() {
           ListEmptyComponent={<Text>Nenhum aluno encontrado</Text>}
           keyExtractor={(student) => student.id_aluno}
           showsVerticalScrollIndicator={false}
-          renderItem={(item) => (
-            <Button
-              icon="account-circle"
-              mode="outlined"
-              style={styles.button}
-              onPress={() => navigation.push('Register')}
-            >
-              {item.item.str_nomealuno}
-            </Button>
-          )}
+          renderItem={(item) => {
+            const { id_aluno, str_nomealuno } = item.item;
+
+            return (
+              <Button
+                icon="account-circle"
+                mode="outlined"
+                style={styles.button}
+                onPress={() => navigation.push('Register', { id: id_aluno })}
+              >
+                {str_nomealuno}
+              </Button>
+            );
+          }}
           ItemSeparatorComponent={() => <View style={styles.gap} />}
         />
       ) : (

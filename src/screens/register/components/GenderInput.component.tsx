@@ -1,19 +1,14 @@
 import SelectInputComponent from './SelectInput.component';
 import ControlComponent from './Control.component';
+import GenderModel from '../models/gender.model';
 
-interface Gender {
-  name: string;
-  acronym: string;
-}
-
-const genders: Gender[] = [
-  { name: 'Masculino', acronym: 'M' },
-  { name: 'Feminino', acronym: 'F' },
-];
-
-export default function GenderInputComponent() {
-  const getAcronym = (gender: Gender) => gender.acronym;
-  const getName = (gender: Gender) => gender.name;
+export default function GenderInputComponent({
+  genders,
+}: {
+  genders: GenderModel[];
+}) {
+  const getAcronym = (gender: GenderModel) => gender.acronym;
+  const getName = (gender: GenderModel) => gender.name;
 
   return (
     <ControlComponent

@@ -1,23 +1,12 @@
-import { useEffect, useState } from 'react';
 import SelectInputComponent from './SelectInput.component';
-import { staticAxios } from '../register.services';
 import ControlComponent from './Control.component';
+import StateResponse from '../models/state.response';
 
-interface StateResponse {
-  id: number;
-  sigla: string;
-  nome: string;
-}
-
-export default function BirthStateInputComponent() {
-  const [states, setStates] = useState<StateResponse[]>([]);
-
-  useEffect(() => {
-    staticAxios
-      .get<StateResponse[]>('/ibge/uf/v1')
-      .then((value) => setStates(value.data));
-  }, []);
-
+export default function BirthStateInputComponent({
+  states,
+}: {
+  states: StateResponse[];
+}) {
   const getSigla = (state: StateResponse) => state.sigla;
   const getNome = (state: StateResponse) => state.nome;
 
