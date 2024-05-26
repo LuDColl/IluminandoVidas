@@ -7,11 +7,15 @@ import RegisterScreen from 'screens/register/Register.screen';
 import { Stack } from 'router';
 import { theme, LightTheme } from 'theme';
 import HomeScreen from 'screens/home/Home.screen';
-import LoginScreen from 'screens/login/Login.screen';
+import LoginScreen from 'screens/login/login.screen';
+import CadastroScreen from 'screens/cadastro/CadastroCliente.screen';
 
 registerTranslation('pt-BR', pt);
 
-export default function App() {
+
+const Stack = createStackNavigator();
+
+const App = () => {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer theme={LightTheme}>
@@ -23,8 +27,11 @@ export default function App() {
           <Stack.Screen name="Search" component={SearchScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Cadastro" component={CadastroScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
-}
+};
+
+export default App;

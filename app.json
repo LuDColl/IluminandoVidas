@@ -1,25 +1,27 @@
 {
   "expo": {
     "name": "IluminandoVidas",
-    "slug": "IluminandoVidas",
+    "slug": "iluminando-vidas",
     "version": "1.0.0",
     "orientation": "portrait",
     "jsEngine": "hermes",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "../splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFF2E5"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "jsEngine": "jsc"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "../adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
