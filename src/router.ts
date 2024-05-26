@@ -1,10 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RegisterScreenParamsType } from 'screens/register/Register.types';
-import { SearchScreenParamsType } from 'screens/search/Search.types';
+import { Key } from 'react';
 
 export type RootStackParamList = {
-  Register: RegisterScreenParamsType;
-  Search: SearchScreenParamsType;
+  Register?: { city?: string; id?: number };
+  Search: {
+    query?: string;
+    placeholder?: string;
+    items: {
+      key: Key;
+      title: string;
+    }[];
+  };
   Login: any;
   Home: any;
 };

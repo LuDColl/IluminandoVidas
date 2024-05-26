@@ -1,25 +1,21 @@
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ReactNode } from 'react';
 import { Appbar, Searchbar } from 'react-native-paper';
 import { RootStackParamList } from 'router';
 
-type AppBarType = (props: {
-  placeholder?: string;
-  query: string;
-  setQuery: (query: string) => void;
-  navigation: NativeStackNavigationProp<
-    RootStackParamList,
-    'Search',
-    undefined
-  >;
-}) => ReactNode;
-
-const AppBarComponent: AppBarType = ({
-  placeholder,
+export default function AppBarComponent({
   query,
   setQuery,
-  navigation,
-}) => {
+}: {
+  query: string;
+  setQuery: (query: string) => void;
+}) {
+  const route = useRoute<RouteProp<RootStackParamList, 'Search'>>();
+  const { placeholder } = route.params;
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Search'>>();
+
   return (
     <Appbar.Header>
       <Appbar.BackAction onPress={navigation.goBack} />
@@ -35,6 +31,4 @@ const AppBarComponent: AppBarType = ({
       />
     </Appbar.Header>
   );
-};
-
-export default AppBarComponent;
+}
