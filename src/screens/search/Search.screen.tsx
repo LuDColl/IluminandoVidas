@@ -1,32 +1,47 @@
-import { ScrollView } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import AppBarComponent from './components/AppBar.component';
 import { List } from 'react-native-paper';
-import { SearchScreenPropsType } from './Search.types';
-import { useSearch } from './Search.hooks';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from 'router';
+import { useState } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export default function SearchScreen({
-  route,
-  navigation,
-}: SearchScreenPropsType) {
-  const { filtredItems, placeholder, query, setQuery } = useSearch(route);
+export default function SearchScreen() {
+  const route = useRoute<RouteProp<RootStackParamList, 'Search'>>();
+  const { items, query: initialQuery } = route.params;
+  const [query, setQuery] = useState(initialQuery ?? '');
 
-  const mappedItems = filtredItems.map((item) => (
-    <List.Item
-      key={item.key}
-      title={item.title}
-      onPress={() => navigation.navigate('Register', { city: item.title })}
-    />
-  ));
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Search'>>();
+
+  const filtredItems = items.filter((item) => {
+    const lowerTitle = item.title.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const includes = lowerTitle.includes(lowerQuery);
+    return includes;
+  });
 
   return (
-    <>
-      <AppBarComponent
-        placeholder={placeholder}
-        query={query}
-        setQuery={setQuery}
-        navigation={navigation}
+    <View>
+      <AppBarComponent query={query} setQuery={setQuery} />
+      <FlatList
+        data={filtredItems}
+        style={styles.list}
+        renderItem={(item) => {
+          const { key, title } = item.item;
+          return (
+            <List.Item
+              key={key}
+              title={title}
+              onPress={() => navigation.navigate('Register', { city: title })}
+            />
+          );
+        }}
       />
-      <ScrollView style={{ padding: 16 }}>{mappedItems}</ScrollView>
-    </>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  list: { padding: 16 },
+});
