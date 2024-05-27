@@ -1,5 +1,5 @@
 import SelectInputComponent from './SelectInput.component';
-import ControlComponent from './Control.component';
+import RegisterControlComponent from './RegisterController.component';
 import StateResponse from '../models/state.response';
 
 export default function BirthStateInputComponent({
@@ -11,7 +11,7 @@ export default function BirthStateInputComponent({
   const getNome = (state: StateResponse) => state.nome;
 
   return (
-    <ControlComponent
+    <RegisterControlComponent
       name="birthUf"
       render={({ onChange }) => (
         <SelectInputComponent

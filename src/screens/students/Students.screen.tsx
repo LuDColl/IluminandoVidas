@@ -65,7 +65,7 @@ export default function StudentsScreen() {
               <Button
                 icon="account-circle"
                 mode="outlined"
-                style={styles.button}
+                contentStyle={styles.button}
                 onPress={() => navigation.push('Register', { id: id_aluno })}
               >
                 {str_nomealuno}
@@ -88,6 +88,6 @@ export default function StudentsScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16 },
   gap: { height: 16 },
-  button: { height: 48, justifyContent: 'center', alignItems: 'flex-start' },
+  button: { height: 48 },
   loading: { flex: 1 },
 });

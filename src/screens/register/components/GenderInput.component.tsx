@@ -1,5 +1,5 @@
 import SelectInputComponent from './SelectInput.component';
-import ControlComponent from './Control.component';
+import RegisterControlComponent from './RegisterController.component';
 import GenderModel from '../models/gender.model';
 
 export default function GenderInputComponent({
@@ -11,7 +11,7 @@ export default function GenderInputComponent({
   const getName = (gender: GenderModel) => gender.name;
 
   return (
-    <ControlComponent
+    <RegisterControlComponent
       name="genderAcronym"
       render={({ onChange }) => (
         <SelectInputComponent

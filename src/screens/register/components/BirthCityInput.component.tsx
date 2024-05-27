@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import TextInputComponent from 'components/TextInput.component';
-import ControlComponent from './Control.component';
+import RegisterControlComponent from './RegisterController.component';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFormContext } from 'react-hook-form';
 import RegisterForm from '../models/register.form';
@@ -40,7 +40,7 @@ export default function BirthCityComponent() {
   const disabled = cities === null || cities.length === 0;
 
   return (
-    <ControlComponent
+    <RegisterControlComponent
       name="birthCity"
       rules={{ required: 'Cidade de Nascimento Obrigatória' }}
       render={({ onChange, value, hasError }) => {

@@ -1,8 +1,8 @@
-import InputControlComponent from './InputControl.component';
+import RegisterInputControllerComponent from './RegisterInputController.component';
 
 export default function StreetInputComponent() {
   return (
-    <InputControlComponent
+    <RegisterInputControllerComponent
       name="street"
       rules={{ required: 'Rua obrigatória' }}
       label="Endereço"

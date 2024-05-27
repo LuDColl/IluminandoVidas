@@ -1,8 +1,8 @@
-import InputControlComponent from './InputControl.component';
+import RegisterInputControllerComponent from './RegisterInputController.component';
 
 export default function SerieInputComponent() {
   return (
-    <InputControlComponent
+    <RegisterInputControllerComponent
       name="serie"
       rules={{ required: 'Série obrigatória' }}
       label="Série"

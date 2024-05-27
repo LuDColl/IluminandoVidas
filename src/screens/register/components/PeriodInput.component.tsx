@@ -1,8 +1,8 @@
-import InputControlComponent from './InputControl.component';
+import RegisterInputControllerComponent from './RegisterInputController.component';
 
 export default function PeriodInputComponent() {
   return (
-    <InputControlComponent
+    <RegisterInputControllerComponent
       name="period"
       rules={{ required: 'Periodo obrigatório' }}
       label="Periodo"

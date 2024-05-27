@@ -1,5 +1,5 @@
 import { Key, ReactNode, useContext } from 'react';
-import ControlComponent from './Control.component';
+import RegisterControlComponent from './RegisterController.component';
 import MenuComponent from './Menu.component';
 import { Menu, TextInput } from 'react-native-paper';
 import { RegisterContext } from '../register.context';
@@ -37,7 +37,7 @@ export default function SelectInputComponent<
   const disabled = loading || items.length === 0;
 
   return (
-    <ControlComponent
+    <RegisterControlComponent
       name={name}
       rules={rules}
       render={({ onChange, value, hasError }) => (

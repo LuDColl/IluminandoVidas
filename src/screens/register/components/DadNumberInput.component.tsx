@@ -1,8 +1,8 @@
-import InputControlComponent from './InputControl.component';
+import RegisterInputControllerComponent from './RegisterInputController.component';
 
 export default function DadNumberInputComponent() {
   return (
-    <InputControlComponent
+    <RegisterInputControllerComponent
       name="dadNumber"
       rules={{ required: 'Número do Pai obrigatório' }}
       label="Número"

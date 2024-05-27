@@ -1,8 +1,8 @@
-import InputControlComponent from './InputControl.component';
+import RegisterInputControllerComponent from './RegisterInputController.component';
 
 export default function NameInputComponent() {
   return (
-    <InputControlComponent
+    <RegisterInputControllerComponent
       name="name"
       rules={{ required: 'Nome obrigatório' }}
       label="Nome"

@@ -1,12 +1,11 @@
-import ControlComponent from './Control.component';
-import TextInputComponent from '../../../components/TextInput.component';
-import { FieldPath, RegisterOptions } from 'react-hook-form';
+import { FieldPath, RegisterOptions, useFormContext } from 'react-hook-form';
 import RegisterForm from '../models/register.form';
 import { StyleProp, ViewStyle } from 'react-native';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import { ReactNode } from 'react';
+import InputControllerComponent from 'components/InputControl.component';
 
-export default function InputControlComponent<
+export default function RegisterInputControllerComponent<
   TName extends FieldPath<RegisterForm>
 >({
   name,
@@ -26,22 +25,17 @@ export default function InputControlComponent<
   right?: ReactNode;
   editable?: boolean | undefined;
 }) {
+  const { control } = useFormContext<RegisterForm>();
+
   return (
-    <ControlComponent
+    <InputControllerComponent
+      control={control}
       name={name}
+      editable={editable}
+      label={label}
+      right={right}
       rules={rules}
       style={style}
-      render={({ onChange, onBlur, value, hasError }) => (
-        <TextInputComponent
-          label={label}
-          onChangeText={onChange}
-          onBlur={onBlur}
-          value={value as string}
-          error={hasError}
-          right={right}
-          editable={editable}
-        />
-      )}
     />
   );
 }

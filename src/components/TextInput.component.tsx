@@ -1,7 +1,15 @@
 import { ReactNode } from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import {
+  KeyboardTypeOptions,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
+import {
+  RenderProps,
+  TextInputLabelProp,
+} from 'react-native-paper/lib/typescript/components/TextInput/types';
 
 export default function TextInputComponent({
   label,
@@ -15,6 +23,9 @@ export default function TextInputComponent({
   left,
   outlineStyle,
   style,
+  keyboardType,
+  secureTextEntry,
+  render,
 }: {
   label?: TextInputLabelProp;
   onChangeText?: ((text: string) => void) | undefined;
@@ -27,6 +38,9 @@ export default function TextInputComponent({
   left?: ReactNode;
   outlineStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
+  keyboardType?: KeyboardTypeOptions | undefined;
+  secureTextEntry?: boolean | undefined;
+  render?: (props: RenderProps) => React.ReactNode;
 }) {
   return (
     <TextInput
@@ -42,6 +56,9 @@ export default function TextInputComponent({
       disabled={disabled}
       left={left}
       style={style}
+      keyboardType={keyboardType}
+      secureTextEntry={secureTextEntry}
+      render={render}
     />
   );
 }

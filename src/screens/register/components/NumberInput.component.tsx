@@ -1,5 +1,5 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
-import InputControlComponent from './InputControl.component';
+import RegisterInputControllerComponent from './RegisterInputController.component';
 import ImageMenuComponent from './imageMenu/ImageMenu.component';
 
 export default function NumberInputComponent({
@@ -9,7 +9,7 @@ export default function NumberInputComponent({
 }) {
   return (
     <View style={styles.view}>
-      <InputControlComponent
+      <RegisterInputControllerComponent
         name="number"
         rules={{ required: 'Número obrigatório' }}
         label="Número"
