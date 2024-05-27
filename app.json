@@ -12,9 +12,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFF2E5"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "jsEngine": "jsc"
@@ -36,6 +34,9 @@
         }
       ]
     ],
+    "packagerOpts": {
+      "config": "metro.config.js"
+    },
     "sdkVersion": "51.0.0"
   }
 }
