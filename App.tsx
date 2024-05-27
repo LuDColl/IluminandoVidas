@@ -9,10 +9,11 @@ import { theme, LightTheme } from 'theme';
 import HomeScreen from 'screens/home/Home.screen';
 import LoginScreen from 'screens/login/Login.screen';
 import UserRegisterScreen from 'screens/userRegister/UserRegister.screen';
+import StudentsScreen from 'screens/students/Students.screen';
 
 registerTranslation('pt-BR', pt);
 
-export default function App() {
+const App = () => {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer theme={LightTheme}>
@@ -25,8 +26,11 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="UserRegister" component={UserRegisterScreen} />
+          <Stack.Screen name="Students" component={StudentsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
-}
+};
+
+export default App;
