@@ -1,48 +1,97 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Logo from '../img/logohome.svg';
-import Iline from '../img/line.svg';
-import Wave from '../img/vector.svg';
-import { Button } from 'components/Button';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
+import {
+  Avatar,
+  Card,
+  Divider,
+  IconButton,
+  useTheme,
+} from 'react-native-paper';
+import { primaryColor } from 'theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { getImageMaxHeight } from 'utils/helpers/image.helper';
+import Wave from '../../../assets/images/wave.svg';
 
 export default function HomeScreen() {
+  const [logo, setLogo] = useState<any>(null);
+  const [logoHeight, setLogoHeight] = useState(0);
+  const { colors } = useTheme();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
 
+  useEffect(() => {
+    const logo = require('../../../assets/images/logo.jpg');
+    setLogo(logo);
+    const logoHeight = getImageMaxHeight(logo);
+    setLogoHeight(logoHeight / 2);
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.greetingText}>Olá, Fernanda!</Text>
-        <Text style={styles.welcomeText}>Seja bem-vinda!</Text>
-      </View>
+    <View style={{ flex: 1, backgroundColor: primaryColor }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'space-around',
+            paddingHorizontal: 16,
+          }}
+        >
+          <Card>
+            <Card.Title
+              style={{ padding: 16 }}
+              title="Olá, Fernanda!"
+              subtitle="Seja bem-vinda!"
+              right={() => <Avatar.Icon icon="account" />}
+            />
+          </Card>
 
-      <View style={styles.logoContainer}>
-        <Logo width={375} height={436} />
-      </View>
-
-      <Iline style={styles.line} width={350} height={200} />
-
-      <View style={styles.menuContainer}>
-        <Button
-          onPress={() => navigation.navigate('Students')}
-          title="Alunos"
+          {logo && (
+            <Image
+              source={logo}
+              style={{ width: '100%', height: logoHeight }}
+              resizeMode="cover"
+            />
+          )}
+        </View>
+        <Divider
+          style={{ marginTop: 16, marginBottom: 24, marginHorizontal: 16 }}
         />
-
-        <Button
-          title="Cadastro"
-          onPress={() => navigation.navigate('Register')}
-        />
-
-        <Button
-          title="Admin"
-          onPress={() => navigation.navigate('UserRegister')}
-        />
-      </View>
-
-      <Wave style={styles.waveform} width={450} height={250} />
+        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
+          >
+            <IconButton
+              mode="contained"
+              icon="account-group"
+              onPress={() => {}}
+              size={60}
+              style={{ borderRadius: 8 }}
+              containerColor={colors.background}
+            />
+            <IconButton
+              mode="contained"
+              icon="card-account-details"
+              size={60}
+              style={{ borderRadius: 8 }}
+              containerColor={colors.background}
+            />
+            <IconButton
+              mode="contained"
+              icon="information-variant"
+              size={60}
+              style={{ borderRadius: 8 }}
+              containerColor={colors.background}
+            />
+          </View>
+          <Wave
+            width={Dimensions.get('window').width}
+            height={Dimensions.get('window').width}
+          />
+        </View>
+      </SafeAreaView>
     </View>
   );
 }

@@ -6,12 +6,13 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import { supabase } from 'utils/supabase';
 import { primaryColor } from 'theme';
+import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [imageHeight, setImageHeight] = useState(0);
+  const [logoHeight, setLogoHeight] = useState(0);
   const [loading, setLoading] = useState(false);
   const [logo, setLogo] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -28,17 +29,22 @@ export default function LoginScreen() {
     const dimensions = Dimensions.get('window');
     const screenWidth = dimensions.width;
     const ratio = imageSource.width / imageSource.height;
-    setImageHeight(screenWidth * ratio);
+    setLogoHeight(screenWidth * ratio);
   }, []);
 
   const login = async () => {
     setLoading(true);
 
+    const cryptedPassword = await digestStringAsync(
+      CryptoDigestAlgorithm.SHA512,
+      password
+    );
+
     const { data, error } = await supabase
       .from('tutor')
       .select('*')
       .eq('str_usuario', username)
-      .eq('str_senha', password);
+      .eq('str_senha', cryptedPassword);
 
     setLoading(false);
     if (error) return setError('Erro ao fazer login');
@@ -55,7 +61,7 @@ export default function LoginScreen() {
         {logo && (
           <Image
             source={logo}
-            style={{ ...styles.logo, height: imageHeight }}
+            style={{ ...styles.logo, height: logoHeight }}
             resizeMode="cover"
           />
         )}
