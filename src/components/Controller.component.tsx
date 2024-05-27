@@ -1,42 +1,43 @@
 import {
+  Control,
   Controller,
   ControllerRenderProps,
   FieldPath,
+  FieldValues,
   RegisterOptions,
-  useFormContext,
 } from 'react-hook-form';
 import { StyleProp, View, ViewStyle } from 'react-native';
 import { HelperText } from 'react-native-paper';
-import RegisterForm from '../models/register.form';
 import { ReactElement } from 'react';
 
-export default function ControlComponent<
-  TName extends FieldPath<RegisterForm>
+export default function ControllerComponent<
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
 >({
+  control,
   style,
   name,
   rules,
   render,
 }: {
+  control?: Control<TFieldValues>;
   style?: StyleProp<ViewStyle>;
   name: TName;
   rules?: Omit<
-    RegisterOptions<RegisterForm, TName>,
+    RegisterOptions<TFieldValues, TName>,
     'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
   >;
   render: (
-    props: { hasError: boolean } & ControllerRenderProps<RegisterForm, TName>
+    props: { hasError: boolean } & ControllerRenderProps<TFieldValues, TName>
   ) => ReactElement;
 }) {
-  const { control } = useFormContext<RegisterForm>();
-
   return (
     <View style={style}>
       <Controller
         control={control}
         name={name}
         rules={rules}
-        render={({ field: field, fieldState: { error } }) => {
+        render={({ field, fieldState: { error } }) => {
           const hasError = !!error;
           return (
             <>

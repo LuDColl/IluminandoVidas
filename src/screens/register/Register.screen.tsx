@@ -1,6 +1,6 @@
 import { LayoutRectangle, ScrollView, StyleSheet, View } from 'react-native';
 import { Divider, ProgressBar, Snackbar } from 'react-native-paper';
-import AppbarComponent from './components/Appbar.component';
+import RegisterAppbarComponent from './components/RegisterAppbar.component';
 import NumberInputComponent from './components/NumberInput.component';
 import NameInputComponent from './components/NameInput.component';
 import ButtonComponent from './components/Button.component';
@@ -174,7 +174,7 @@ export default function RegisterScreen() {
     const birthDate = new Date(+day, +month - 1, +year);
     const age = getAge(birthDate);
 
-    const { data: response, error } = await supabase
+    const { error } = await supabase
       .from('aluno')
       .insert({
         str_nomealuno: data.name,
@@ -204,7 +204,7 @@ export default function RegisterScreen() {
 
   return (
     <View style={styles.container}>
-      <AppbarComponent />
+      <RegisterAppbarComponent />
       {loading && <ProgressBar indeterminate={true} />}
       <RegisterContext.Provider value={{ safeArea }}>
         <View

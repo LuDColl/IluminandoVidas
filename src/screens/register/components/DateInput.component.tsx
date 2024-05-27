@@ -1,5 +1,5 @@
 import { DatePickerInput } from 'react-native-paper-dates';
-import ControlComponent from './Control.component';
+import RegisterControlComponent from './RegisterController.component';
 import { useState } from 'react';
 import { FieldPath, RegisterOptions } from 'react-hook-form';
 import RegisterForm from '../models/register.form';
@@ -41,7 +41,7 @@ export default function DateInputComponent<
     };
 
   return (
-    <ControlComponent
+    <RegisterControlComponent
       rules={rules}
       name={name}
       render={({ onChange, onBlur, disabled, hasError, value }) => {
