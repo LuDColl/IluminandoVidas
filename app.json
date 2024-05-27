@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "IluminandoVidas",
+    "name": "Iluminando Vidas",
     "slug": "iluminando-vidas",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,9 +8,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "../splash.png",
+      "image": "./assets/images/logo.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#FFF2E5"
+      "backgroundColor": "#ff7f00"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -19,12 +19,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "../adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/logo.jpg",
+        "backgroundColor": "#ff7f00"
+      },
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "package": "com.ludcoll.iluminandovidas"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/logo.jpg"
     },
     "plugins": [
       [
@@ -37,6 +39,12 @@
     "packagerOpts": {
       "config": "metro.config.js"
     },
-    "sdkVersion": "51.0.0"
+    "sdkVersion": "51.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "dedfe09d-7e1b-425c-ac55-a9d25757429d"
+      }
+    }
   }
 }
+
