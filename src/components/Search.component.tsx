@@ -46,13 +46,13 @@ export default function SearchComponent<T>({
         setQuery={setQuery}
         placeholder={placeholder}
       />
-      {filtredItems ? (
+      {items ? (
         <FlatList
           data={filtredItems}
           ListEmptyComponent={<Text>{noData}</Text>}
           keyExtractor={getKey}
           showsVerticalScrollIndicator={false}
-          style={styles.list}
+          contentContainerStyle={styles.list}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={refresh} />
           }
@@ -62,7 +62,7 @@ export default function SearchComponent<T>({
               <Button
                 icon={icon}
                 mode="outlined"
-                contentStyle={styles.button}
+                contentStyle={styles.contentButton}
                 onPress={() => onPress(item)}
               >
                 {text}
@@ -73,9 +73,9 @@ export default function SearchComponent<T>({
         />
       ) : (
         <ActivityIndicator
+          style={styles.loading}
           animating={true}
           size="large"
-          style={styles.loading}
         />
       )}
     </>
@@ -83,8 +83,8 @@ export default function SearchComponent<T>({
 }
 
 const styles = StyleSheet.create({
-  list: { padding: 16 },
   gap: { height: 16 },
-  button: { height: 48, justifyContent: 'flex-start' },
-  loading: { flex: 1 },
+  loading: { flex: 1, justifyContent: 'center' },
+  list: { padding: 16 },
+  contentButton: { height: 48, justifyContent: 'flex-start' },
 });

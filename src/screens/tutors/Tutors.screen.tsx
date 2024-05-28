@@ -55,7 +55,7 @@ export default function TutorsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'space-between' },
+  container: { flex: 1 },
   button: { margin: 16 },
   buttonContent: { height: 48 },
 });

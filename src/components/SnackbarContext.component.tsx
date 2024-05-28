@@ -1,5 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 
 export default function SnackbarContextComponet({
@@ -11,10 +11,10 @@ export default function SnackbarContextComponet({
   message?: string | null;
   setMessage: Dispatch<SetStateAction<string | null>>;
   children: ReactNode;
-  style?: StyleProp<ViewStyle> | undefined;
+  style?: ViewStyle | undefined;
 }) {
   return (
-    <View style={style}>
+    <View style={{ ...style, flex: 1 }}>
       {children}
       <Snackbar
         visible={!!message}
