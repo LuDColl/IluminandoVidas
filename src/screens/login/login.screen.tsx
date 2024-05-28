@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { TextInput, Button, useTheme } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
@@ -9,6 +9,8 @@ import { primaryColor } from 'theme';
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { getImageMaxHeight } from 'utils/helpers/image.helper';
 import SnackbarContextComponet from 'components/SnackbarContext.component';
+import PasswordInputComponent from 'components/inputs/PasswordInput.component';
+import TextInputComponent from 'components/inputs/TextInput.component';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -75,26 +77,16 @@ export default function LoginScreen() {
         )}
       </View>
       <View style={{ ...styles.form, backgroundColor: theme.colors.onPrimary }}>
-        <TextInput
-          mode="outlined"
+        <TextInputComponent
           label="Usuário"
           value={username}
           onChangeText={setUsername}
         />
         <View style={styles.gap} />
-        <TextInput
-          mode="outlined"
+        <PasswordInputComponent
           label="Senha"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={!showPassword}
-          right={
-            <TextInput.Icon
-              icon={showPassword ? 'eye-off' : 'eye'}
-              onPress={() => setShowPassword(!showPassword)}
-              color={theme.colors.primary}
-            />
-          }
+          password={password}
+          setPassword={setPassword}
         />
         <View style={styles.gap} />
         <Button
