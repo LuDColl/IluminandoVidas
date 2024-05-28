@@ -5,10 +5,10 @@ export function getPhoneAndMaskedPhone(
   if (!ddd || !number) return ['', ''];
 
   const phone = `${ddd}${number}`;
-  const phoneNumbers = `${phone}`;
-  const firstPhoneNumbers = phoneNumbers.substring(0, 5);
-  const lastPhoneNumbers = phoneNumbers.substring(5);
-  const maskedPhone = `(${ddd}) ${firstPhoneNumbers}-${lastPhoneNumbers}`;
+  const numbers = `${number}`;
+  const firstNumbers = numbers.substring(0, 5);
+  const lastNumbers = numbers.substring(5);
+  const maskedPhone = `(${ddd}) ${firstNumbers}-${lastNumbers}`;
   return [phone, maskedPhone];
 }
 

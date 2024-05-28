@@ -32,11 +32,12 @@ export default function PhoneInputControllerComponent<
         required: 'Telefone obrigatório',
         minLength: { value: 15, message: 'Telefone Inválido' },
       }}
-      render={({ onChange }) => (
+      render={({ onChange, value }) => (
         <PhoneInputComponent
           label={label}
           onChangeText={onChange}
           onChangeUnmaskedText={field.onChange}
+          value={value}
         />
       )}
     />
