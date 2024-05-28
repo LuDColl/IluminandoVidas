@@ -72,7 +72,7 @@ export default function HomeScreen() {
                 mode="contained"
                 icon="card-account-details"
                 size={60}
-                onPress={() => navigation.push('Register')}
+                onPress={() => navigation.push('Student')}
                 style={styles.icon}
                 containerColor={colors.background}
               />
@@ -83,7 +83,7 @@ export default function HomeScreen() {
                 <IconButton
                   mode="contained"
                   icon="information-variant"
-                  onPress={() => navigation.push('UserRegister')}
+                  onPress={() => navigation.push('Tutor')}
                   size={60}
                   style={styles.icon}
                   containerColor={colors.background}

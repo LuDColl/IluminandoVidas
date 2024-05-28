@@ -27,7 +27,7 @@ export default function CitiesScreen() {
       getKey={({ codigo_ibge }) => codigo_ibge.toString()}
       getText={({ nome }) => nome}
       noData="Nenhuma cidade encontrada"
-      onPress={({ nome }) => navigation.navigate('Register', { city: nome })}
+      onPress={({ nome }) => navigation.navigate('Student', { city: nome })}
       onRefresh={getStudents}
       placeholder="Digite o nome da cidade"
     />
