@@ -1,6 +1,6 @@
 import { FieldPath, RegisterOptions, useFormContext } from 'react-hook-form';
 import StudentForm from '../models/student.form';
-import { StyleProp, ViewStyle } from 'react-native';
+import { KeyboardTypeOptions, StyleProp, ViewStyle } from 'react-native';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import { ReactNode } from 'react';
 import InputControllerComponent from 'components/controls/InputController.component';
@@ -14,6 +14,7 @@ export default function StudentInputControllerComponent<
   style,
   right,
   editable,
+  keyboardType,
 }: {
   name: TName;
   rules?: Omit<
@@ -24,6 +25,7 @@ export default function StudentInputControllerComponent<
   label?: TextInputLabelProp;
   right?: ReactNode;
   editable?: boolean | undefined;
+  keyboardType?: KeyboardTypeOptions | undefined;
 }) {
   const { control } = useFormContext<StudentForm>();
 
@@ -36,6 +38,7 @@ export default function StudentInputControllerComponent<
       right={right}
       rules={rules}
       style={style}
+      keyboardType={keyboardType}
     />
   );
 }

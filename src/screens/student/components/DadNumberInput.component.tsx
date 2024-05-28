@@ -6,6 +6,7 @@ export default function DadNumberInputComponent() {
       name="dadNumber"
       rules={{ required: 'Número do Pai obrigatório' }}
       label="Número"
+      keyboardType="numeric"
     />
   );
 }
