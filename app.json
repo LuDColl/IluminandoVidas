@@ -2,7 +2,7 @@
   "expo": {
     "name": "Iluminando Vidas",
     "slug": "iluminando-vidas",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "jsEngine": "hermes",
     "icon": "./assets/images/logo.jpg",
