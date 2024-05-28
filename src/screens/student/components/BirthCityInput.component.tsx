@@ -1,12 +1,12 @@
 import { TextInput } from 'react-native-paper';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
-import TextInputComponent from 'components/TextInput.component';
 import StudentControlComponent from './StudentController.component';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { useFormContext } from 'react-hook-form';
 import StudentForm from '../models/student.form';
 import { useEffect } from 'react';
+import TextInputComponent from 'components/inputs/TextInput.component';
 
 export default function BirthCityComponent() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'Student'>>();

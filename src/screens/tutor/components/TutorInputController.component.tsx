@@ -5,8 +5,8 @@ import {
   TextInputLabelProp,
 } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import { ReactNode } from 'react';
-import InputControllerComponent from 'components/InputControl.component';
 import TutorForm from '../models/tutor.form';
+import InputControllerComponent from 'components/controls/InputController.component';
 
 export default function TutorInputControllerComponent<
   TName extends FieldPath<TutorForm>

@@ -3,10 +3,10 @@ import StudentControlComponent from './StudentController.component';
 import MenuComponent from './Menu.component';
 import { Menu, TextInput } from 'react-native-paper';
 import { RegisterContext } from '../student.context';
-import TextInputComponent from 'components/TextInput.component';
 import { FieldPath, RegisterOptions } from 'react-hook-form';
 import StudentForm from '../models/student.form';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
+import TextInputComponent from 'components/inputs/TextInput.component';
 
 export default function SelectInputComponent<
   TName extends FieldPath<StudentForm>,

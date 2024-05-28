@@ -23,7 +23,16 @@ export default function TutorScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Tutor'>>();
 
   const form = useForm<TutorForm>({
-    defaultValues: { confirmPassword: '', password: '', user: '' },
+    defaultValues: {
+      confirmPassword: '',
+      password: '',
+      user: '',
+      address: '',
+      admin: false,
+      maskedPhone: '',
+      name: '',
+      phone: '',
+    },
   });
 
   useEffect(() => {
@@ -79,6 +88,7 @@ export default function TutorScreen() {
     async ({ name, phone, address, user, password, admin }) => {
       const ddd = phone.substring(0, 2);
       phone = phone.substring(2);
+      setLoading(true);
 
       const encryptedPassword = await digestStringAsync(
         CryptoDigestAlgorithm.SHA512,
@@ -96,6 +106,7 @@ export default function TutorScreen() {
         bit_adm: admin,
       });
 
+      setLoading(false);
       if (error) return setError('Erro ao cadastrar tutor');
       navigation.pop();
     }
@@ -189,6 +200,7 @@ export default function TutorScreen() {
           style={styles.button}
           contentStyle={styles.buttonContent}
           onPress={submit}
+          loading={loading}
         >
           Cadastrar
         </Button>

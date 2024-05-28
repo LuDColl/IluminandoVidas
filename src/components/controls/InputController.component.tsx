@@ -10,8 +10,8 @@ import {
   TextInputLabelProp,
 } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import { ReactNode } from 'react';
-import TextInputComponent from './TextInput.component';
-import ControllerComponent from './Controller.component';
+import TextInputComponent from '../inputs/TextInput.component';
+import ControllerComponent from '../Controller.component';
 
 export default function InputControllerComponent<
   TFieldValues extends FieldValues,
