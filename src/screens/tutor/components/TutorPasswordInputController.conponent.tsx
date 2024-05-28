@@ -2,7 +2,7 @@ import { FieldPath, RegisterOptions, useFormContext } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import TutorForm from '../models/tutor.form';
-import PasswordInputControllerComponent from 'components/controls/PasswordInputController.component';
+import PasswordInputControllerComponent from 'components/controllers/PasswordInputController.component';
 
 export default function TutorPasswordInputControllerComponent<
   TName extends FieldPath<TutorForm>

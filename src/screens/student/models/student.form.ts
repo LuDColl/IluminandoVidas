@@ -14,6 +14,7 @@ export default interface StudentForm {
   street: string;
   houseNumber: string;
   district: string;
+  complement: string;
 
   school: string;
   serie: string;
@@ -21,9 +22,11 @@ export default interface StudentForm {
 
   mom: string;
   momNumber: string;
+  momMaskedNumber: string;
   momBusinessAddress: string;
 
   dad: string;
   dadNumber: string;
+  dadMaskedNumber: string;
   dadBusinnessAddress: string;
 }

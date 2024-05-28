@@ -1,6 +1,5 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import StudentInputControllerComponent from './StudentInputController.component';
-import ImageMenuComponent from './imageMenu/ImageMenu.component';
 
 export default function NumberInputComponent({
   style,
@@ -16,7 +15,7 @@ export default function NumberInputComponent({
         style={style}
         keyboardType="numeric"
       />
-      <ImageMenuComponent style={{ marginLeft: 16 }} />
+      {/* <ImageMenuComponent style={{ marginLeft: 16 }} />r */}
     </View>
   );
 }
