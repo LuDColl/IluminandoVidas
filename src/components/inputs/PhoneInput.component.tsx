@@ -6,16 +6,19 @@ export default function PhoneInputComponent({
   label,
   onChangeText,
   onChangeUnmaskedText,
+  value,
 }: {
   label?: TextInputLabelProp;
   onChangeText?: ((text: string) => void) | undefined;
   onChangeUnmaskedText?: ((text: string) => void) | undefined;
+  value?: string;
 }) {
   return (
     <TextInputComponent
       label={label}
       keyboardType="numeric"
       onChangeText={onChangeText}
+      value={value}
       render={(props) => (
         <MaskInput
           {...props}

@@ -1,6 +1,7 @@
 export function getAge(birhDate: Date): number {
   const today = new Date();
   const age = today.getFullYear() - birhDate.getFullYear();
+  if (age === 0) return 1;
 
   const monthToday = today.getMonth();
   const birthMonth = birhDate.getMonth();
