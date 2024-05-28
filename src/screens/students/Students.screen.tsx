@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native';
-import { ActivityIndicator, Button, Searchbar } from 'react-native-paper';
+import { useEffect, useState } from 'react';
 import { supabase } from 'utils/supabase';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
+import SearchComponent from 'components/Search.component';
 
 export default function StudentsScreen() {
-  const [query, setQuery] = useState('');
   const [students, setStudents] = useState<any[] | null>(null);
-  const [refreshing, setRefreshing] = useState(false);
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Students'>>();
 
   useEffect(() => {
     getStudents();
@@ -26,68 +22,16 @@ export default function StudentsScreen() {
     setStudents(students.data ?? []);
   };
 
-  const refresh = async () => {
-    setRefreshing(true);
-    await getStudents();
-    setRefreshing(false);
-  };
-
-  const filtredStudents = students?.filter((student) => {
-    const name: string = student.str_nomealuno;
-    const lowerName = name.toLowerCase();
-    const lowerQuery = query.toLowerCase();
-    return lowerName.includes(lowerQuery);
-  });
-
   return (
-    <SafeAreaView style={styles.container}>
-      <Searchbar
-        placeholder="Digite o nome do aluno"
-        onChangeText={setQuery}
-        value={query}
-        onClearIconPress={() => setQuery('')}
-      />
-
-      <View style={styles.gap} />
-      {filtredStudents ? (
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={refresh} />
-          }
-          data={filtredStudents}
-          ListEmptyComponent={<Text>Nenhum aluno encontrado</Text>}
-          keyExtractor={(student) => student.id_aluno}
-          showsVerticalScrollIndicator={false}
-          renderItem={(item) => {
-            const { id_aluno, str_nomealuno } = item.item;
-
-            return (
-              <Button
-                icon="account-circle"
-                mode="outlined"
-                contentStyle={styles.button}
-                onPress={() => navigation.push('Register', { id: id_aluno })}
-              >
-                {str_nomealuno}
-              </Button>
-            );
-          }}
-          ItemSeparatorComponent={() => <View style={styles.gap} />}
-        />
-      ) : (
-        <ActivityIndicator
-          animating={true}
-          size="large"
-          style={styles.loading}
-        />
-      )}
-    </SafeAreaView>
+    <SearchComponent
+      items={students}
+      getKey={({ id_aluno }) => id_aluno}
+      getText={({ str_nomealuno }) => str_nomealuno}
+      noData="Nenhum aluno encontrado"
+      onPress={({ id_aluno }) => navigation.push('Register', { id: id_aluno })}
+      onRefresh={getStudents}
+      placeholder="Digite o nome do aluno"
+      icon="account-circle"
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  gap: { height: 16 },
-  button: { height: 48 },
-  loading: { flex: 1 },
-});
