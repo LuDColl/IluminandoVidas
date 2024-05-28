@@ -1,6 +1,6 @@
 import SelectInputComponent from './SelectInput.component';
 import RegisterControlComponent from './RegisterController.component';
-import StateResponse from '../models/state.response';
+import StateResponse from 'models/state.response';
 
 export default function BirthStateInputComponent({
   states,

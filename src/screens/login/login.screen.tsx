@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Image, Dimensions } from 'react-native';
-import { TextInput, Button, useTheme, Snackbar } from 'react-native-paper';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import { TextInput, Button, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import { supabase } from 'utils/supabase';
 import { primaryColor } from 'theme';
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
+import { getImageMaxHeight } from 'utils/helpers/image.helper';
+import SnackbarContextComponet from 'components/SnackbarContext.component';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -22,14 +24,10 @@ export default function LoginScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Login'>>();
 
   useEffect(() => {
-    const logoUri = '../../../assets/images/logo.jpg';
-    const logo = require(logoUri);
+    const logo = require('../../../assets/images/logo.jpg');
     setLogo(logo);
-    const imageSource = Image.resolveAssetSource(logo);
-    const dimensions = Dimensions.get('window');
-    const screenWidth = dimensions.width;
-    const ratio = imageSource.width / imageSource.height;
-    setLogoHeight(screenWidth * ratio);
+    const height = getImageMaxHeight(logo);
+    setLogoHeight(height);
   }, []);
 
   const login = async () => {
@@ -42,7 +40,7 @@ export default function LoginScreen() {
 
     const { data, error } = await supabase
       .from('tutor')
-      .select('*')
+      .select('id_tutor, str_nome, bit_adm')
       .eq('str_usuario', username)
       .eq('str_senha', cryptedPassword);
 
@@ -52,11 +50,21 @@ export default function LoginScreen() {
     if (!data || data.length == 0)
       return setError('Usuário ou senha incorretos');
 
-    navigation.navigate('Home');
+    const { id_tutor, str_nome, bit_adm } = data[0];
+
+    navigation.replace('Home', {
+      id: id_tutor,
+      name: str_nome,
+      admin: bit_adm,
+    });
   };
 
   return (
-    <View style={styles.container}>
+    <SnackbarContextComponet
+      setMessage={setError}
+      message={error}
+      style={styles.container}
+    >
       <View style={{ ...styles.image, backgroundColor: primaryColor }}>
         {logo && (
           <Image
@@ -98,15 +106,7 @@ export default function LoginScreen() {
           Entrar
         </Button>
       </View>
-      <Snackbar
-        visible={!!error}
-        onDismiss={() => setError(null)}
-        icon="close"
-        onIconPress={() => setError(null)}
-      >
-        {error}
-      </Snackbar>
-    </View>
+    </SnackbarContextComponet>
   );
 }
 

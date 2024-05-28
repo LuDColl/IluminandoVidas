@@ -1,5 +1,5 @@
 import { LayoutRectangle, ScrollView, StyleSheet, View } from 'react-native';
-import { Divider, ProgressBar, Snackbar } from 'react-native-paper';
+import { Divider, ProgressBar } from 'react-native-paper';
 import RegisterAppbarComponent from './components/RegisterAppbar.component';
 import NumberInputComponent from './components/NumberInput.component';
 import NameInputComponent from './components/NameInput.component';
@@ -20,7 +20,6 @@ import DadInputComponent from './components/DadInput.component';
 import DadBusinessAddressInputComponent from './components/DadBusinessAddress.component';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { staticAxios } from './register.services';
 import RegisterForm from './models/register.form';
 import { supabase } from 'utils/supabase';
 import { getAge } from 'utils/helpers/date.helper';
@@ -28,8 +27,11 @@ import GenderInputComponent from './components/GenderInput.component';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
-import StateResponse from './models/state.response';
+import StateResponse from '../../models/state.response';
 import GenderModel from './models/gender.model';
+import SnackbarContextComponet from 'components/SnackbarContext.component';
+import brasilApi from 'utils/brasil.api';
+import { getStates } from 'services/brasil.service';
 
 const genders: GenderModel[] = [
   { name: 'Masculino', acronym: 'M' },
@@ -39,7 +41,7 @@ const genders: GenderModel[] = [
 export default function RegisterScreen() {
   const [states, setStates] = useState<StateResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<String | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { params } = useRoute<RouteProp<RootStackParamList, 'Register'>>();
 
   const navigation =
@@ -77,7 +79,7 @@ export default function RegisterScreen() {
   });
 
   useEffect(() => {
-    const { interceptors } = staticAxios;
+    const { interceptors } = brasilApi;
     const { request, response } = interceptors;
 
     request.use(
@@ -113,10 +115,7 @@ export default function RegisterScreen() {
   }, []);
 
   const initData = async () => {
-    const { data: states } = await staticAxios.get<StateResponse[]>(
-      '/ibge/uf/v1'
-    );
-
+    const states = await getStates();
     setStates(states);
     if (!params?.id) return;
 
@@ -203,7 +202,11 @@ export default function RegisterScreen() {
   });
 
   return (
-    <View style={styles.container}>
+    <SnackbarContextComponet
+      setMessage={setError}
+      message={error}
+      style={styles.container}
+    >
       <RegisterAppbarComponent />
       {loading && <ProgressBar indeterminate={true} />}
       <RegisterContext.Provider value={{ safeArea }}>
@@ -242,15 +245,7 @@ export default function RegisterScreen() {
           <ButtonComponent onPress={submit} style={styles.button} />
         </View>
       </RegisterContext.Provider>
-      <Snackbar
-        visible={!!error}
-        onDismiss={() => setError(null)}
-        icon="close"
-        onIconPress={() => setError(null)}
-      >
-        {error}
-      </Snackbar>
-    </View>
+    </SnackbarContextComponet>
   );
 }
 

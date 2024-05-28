@@ -1,18 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Key } from 'react';
+import TutorResponse from 'screens/home/models/tutor.response';
 
 export type RootStackParamList = {
   Register?: { city?: string; id?: number };
-  Search: {
-    query?: string;
-    placeholder?: string;
-    items: {
-      key: Key;
-      title: string;
-    }[];
-  };
+  Cities: { uf: string };
   Login: any;
-  Home: any;
+  Home: TutorResponse;
   UserRegister: any;
   Students: any;
 };

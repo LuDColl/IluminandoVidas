@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Image, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import {
@@ -8,6 +8,7 @@ import {
   Card,
   Divider,
   IconButton,
+  Text,
   useTheme,
 } from 'react-native-paper';
 import { primaryColor } from 'theme';
@@ -19,6 +20,8 @@ export default function HomeScreen() {
   const [logo, setLogo] = useState<any>(null);
   const [logoHeight, setLogoHeight] = useState(0);
   const { colors } = useTheme();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Home'>>();
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
 
@@ -30,20 +33,14 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: primaryColor }}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'space-around',
-            paddingHorizontal: 16,
-          }}
-        >
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.top}>
           <Card>
             <Card.Title
-              style={{ padding: 16 }}
-              title="Olá, Fernanda!"
-              subtitle="Seja bem-vinda!"
+              style={styles.card}
+              title={`Olá, ${params.name}!`}
+              subtitle="Seja bem-vindo!"
               right={() => <Avatar.Icon icon="account" />}
             />
           </Card>
@@ -51,40 +48,49 @@ export default function HomeScreen() {
           {logo && (
             <Image
               source={logo}
-              style={{ width: '100%', height: logoHeight }}
+              style={{ ...styles.image, height: logoHeight }}
               resizeMode="cover"
             />
           )}
         </View>
-        <Divider
-          style={{ marginTop: 16, marginBottom: 24, marginHorizontal: 16 }}
-        />
-        <View style={{ flex: 1, justifyContent: 'space-between' }}>
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}
-          >
-            <IconButton
-              mode="contained"
-              icon="account-group"
-              onPress={() => {}}
-              size={60}
-              style={{ borderRadius: 8 }}
-              containerColor={colors.background}
-            />
-            <IconButton
-              mode="contained"
-              icon="card-account-details"
-              size={60}
-              style={{ borderRadius: 8 }}
-              containerColor={colors.background}
-            />
-            <IconButton
-              mode="contained"
-              icon="information-variant"
-              size={60}
-              style={{ borderRadius: 8 }}
-              containerColor={colors.background}
-            />
+        <Divider style={styles.divider} />
+        <View style={styles.bottom}>
+          <View style={styles.buttons}>
+            <View style={styles.button}>
+              <IconButton
+                mode="contained"
+                icon="account-group"
+                onPress={() => navigation.push('Students')}
+                size={60}
+                style={styles.icon}
+                containerColor={colors.background}
+              />
+              <Text style={{ color: colors.onPrimary }}>Alunos</Text>
+            </View>
+            <View style={styles.button}>
+              <IconButton
+                mode="contained"
+                icon="card-account-details"
+                size={60}
+                onPress={() => navigation.push('Register')}
+                style={styles.icon}
+                containerColor={colors.background}
+              />
+              <Text style={{ color: colors.onPrimary }}>Cadastro</Text>
+            </View>
+            {params.admin && (
+              <View style={styles.button}>
+                <IconButton
+                  mode="contained"
+                  icon="information-variant"
+                  onPress={() => navigation.push('UserRegister')}
+                  size={60}
+                  style={styles.icon}
+                  containerColor={colors.background}
+                />
+                <Text style={{ color: colors.onPrimary }}>Adminstração</Text>
+              </View>
+            )}
           </View>
           <Wave
             width={Dimensions.get('window').width}
@@ -97,47 +103,18 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: { flex: 1, backgroundColor: primaryColor },
+  safeArea: { flex: 1 },
+  top: {
     flex: 1,
-    position: 'relative',
-    marginTop: 16,
-    backgroundColor: '#FFA500',
-    alignItems: 'center',
-  },
-  header: {
-    width: '100%',
-    paddingTop: 50,
-    paddingBottom: 20,
-    backgroundColor: '#FFF',
-    alignItems: 'center',
-    borderBottomLeftRadius: 50,
-    borderBottomRightRadius: 50,
-    marginBottom: 20,
-  },
-  greetingText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  welcomeText: {
-    fontSize: 16,
-  },
-  logoContainer: {
-    right: 16,
-    bottom: 110,
-  },
-  line: {
-    bottom: 320,
-  },
-  waveform: {
-    position: 'absolute',
-    bottom: -25,
-    left: 0,
-  },
-  menuContainer: {
-    bottom: 380,
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-around',
-    width: '90%',
+    paddingHorizontal: 16,
   },
+  card: { padding: 16 },
+  image: { width: '100%' },
+  divider: { marginTop: 16, marginBottom: 24, marginHorizontal: 16 },
+  bottom: { flex: 1, justifyContent: 'space-between' },
+  buttons: { flexDirection: 'row', justifyContent: 'space-evenly' },
+  button: { alignItems: 'center' },
+  icon: { borderRadius: 8 },
 });

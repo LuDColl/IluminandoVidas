@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import UserRegisterForm from './models/userRegister.form';
 import UserRegisterInputControllerComponent from './components/UserRegisterInputController.component';
-import { Button, Divider, Snackbar, Switch, Text } from 'react-native-paper';
+import { Button, Divider, Switch, Text } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import UserRegisterAppbarComponent from './components/UserRegisterAppBar.component';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -12,9 +12,10 @@ import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
+import SnackbarContextComponet from 'components/SnackbarContext.component';
 
 export default function UserRegisterScreen() {
-  const [error, setError] = useState<String | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const navigation =
     useNavigation<
@@ -65,7 +66,7 @@ export default function UserRegisterScreen() {
   );
 
   return (
-    <>
+    <SnackbarContextComponet setMessage={setError} message={error}>
       <UserRegisterAppbarComponent />
       <View style={styles.body}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -147,15 +148,7 @@ export default function UserRegisterScreen() {
           Cadastrar
         </Button>
       </View>
-      <Snackbar
-        visible={!!error}
-        onDismiss={() => setError(null)}
-        icon="close"
-        onIconPress={() => setError(null)}
-      >
-        {error}
-      </Snackbar>
-    </>
+    </SnackbarContextComponet>
   );
 }
 const styles = StyleSheet.create({
