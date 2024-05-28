@@ -133,6 +133,7 @@ export default function TutorScreen() {
             <TutorInputControllerComponent
               name="maskedPhone"
               label="Telefone"
+              keyboardType="numeric"
               rules={{
                 required: 'Telefone obrigatório',
                 minLength: { value: 15, message: 'Telefone Inválido' },

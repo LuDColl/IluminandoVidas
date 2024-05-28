@@ -32,6 +32,8 @@ import GenderModel from './models/gender.model';
 import SnackbarContextComponet from 'components/SnackbarContext.component';
 import brasilApi from 'utils/brasil.api';
 import { getStates } from 'services/brasil.service';
+import MomNumberInputComponent from './components/MomNumberInput.component';
+import DadNumberInputComponent from './components/DadNumberInput.component';
 
 const genders: GenderModel[] = [
   { name: 'Masculino', acronym: 'M' },
@@ -43,6 +45,7 @@ export default function StudentScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { params } = useRoute<RouteProp<RootStackParamList, 'Student'>>();
+  const hasId = !!params?.id;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Student'>>();
@@ -119,7 +122,7 @@ export default function StudentScreen() {
   const initData = async () => {
     const states = await getStates();
     setStates(states);
-    if (!params?.id) return;
+    if (!hasId) return;
 
     setLoading(true);
 
@@ -236,15 +239,15 @@ export default function StudentScreen() {
               <PeriodInputComponent />
               <Divider style={styles.divider} />
               <MomInputComponent />
-              {/* <MomNumberInputComponent /> */}
+              <MomNumberInputComponent />
               <MomBusinessAddressInputComponent />
               <Divider style={styles.divider} />
               <DadInputComponent />
-              {/* <DadNumberInputComponent /> */}
+              <DadNumberInputComponent />
               <DadBusinessAddressInputComponent />
             </FormProvider>
           </ScrollView>
-          <ButtonComponent onPress={submit} style={styles.button} />
+          {!hasId && <ButtonComponent onPress={submit} style={styles.button} />}
         </View>
       </RegisterContext.Provider>
     </SnackbarContextComponet>

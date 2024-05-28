@@ -23,11 +23,10 @@ export default function PasswordInputComponent({
       value={password}
       onChangeText={setPassword}
       secureTextEntry={!showPassword}
-      keyboardType="visible-password"
       error={error}
       right={
         <TextInput.Icon
-          icon={showPassword ? 'eye-off' : 'eye'}
+          icon={showPassword ? 'eye' : 'eye-off'}
           onPress={() => setShowPassword(!showPassword)}
           color={colors.primary}
         />

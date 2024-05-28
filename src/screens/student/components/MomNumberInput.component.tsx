@@ -6,6 +6,7 @@ export default function MomNumberInputComponent() {
       name="momNumber"
       rules={{ required: 'Número da Mãe obrigatório' }}
       label="Número"
+      keyboardType="numeric"
     />
   );
 }

@@ -14,6 +14,7 @@ export default function NumberInputComponent({
         rules={{ required: 'Número obrigatório' }}
         label="Número"
         style={style}
+        keyboardType="numeric"
       />
       <ImageMenuComponent style={{ marginLeft: 16 }} />
     </View>
