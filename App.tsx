@@ -8,7 +8,9 @@ import HomeScreen from 'screens/home/Home.screen';
 import LoginScreen from 'screens/login/Login.screen';
 import StudentsScreen from 'screens/students/Students.screen';
 import CitiesScreen from 'screens/cities/Cities.screen';
-import TutorScreen from 'screens/tutor/tutor.screen';
+import TutorScreen from 'screens/tutor/Tutor.screen';
+import TutorsScreen from 'screens/tutors/Tutors.screen';
+import StudentScreen from 'screens/student/Student.screen';
 
 registerTranslation('pt-BR', pt);
 
@@ -20,12 +22,13 @@ const App = () => {
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Student" component={TutorScreen} />
+          <Stack.Screen name="Student" component={StudentScreen} />
           <Stack.Screen name="Cities" component={CitiesScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Tutor" component={TutorScreen} />
           <Stack.Screen name="Students" component={StudentsScreen} />
+          <Stack.Screen name="Tutors" component={TutorsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

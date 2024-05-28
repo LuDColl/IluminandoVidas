@@ -83,7 +83,7 @@ export default function HomeScreen() {
                 <IconButton
                   mode="contained"
                   icon="information-variant"
-                  onPress={() => navigation.push('Tutor')}
+                  onPress={() => navigation.push('Tutors')}
                   size={60}
                   style={styles.icon}
                   containerColor={colors.background}
