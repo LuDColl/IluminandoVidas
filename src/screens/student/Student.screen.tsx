@@ -4,7 +4,6 @@ import StudentAppbarComponent from './components/StudentAppbar.component';
 import NumberInputComponent from './components/NumberInput.component';
 import NameInputComponent from './components/NameInput.component';
 import ButtonComponent from './components/Button.component';
-import StartDateInputComponent from './components/StartDate.component';
 import BirthDateInputComponent from './components/BirthDateInput.component';
 import BirthStateInputComponent from './components/BirthStateInput.component';
 import { RegisterContext } from './student.context';
@@ -15,9 +14,7 @@ import SchoolInputComponent from './components/SchoolInput.component';
 import SerieInputComponent from './components/SerieInput.component';
 import PeriodInputComponent from './components/PeriodInput.component';
 import MomInputComponent from './components/MomInput.component';
-import MomBusinessAddressInputComponent from './components/MomBusinessAddress.component';
 import DadInputComponent from './components/DadInput.component';
-import DadBusinessAddressInputComponent from './components/DadBusinessAddress.component';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import StudentForm from './models/student.form';
@@ -34,6 +31,11 @@ import brasilApi from 'utils/brasil.api';
 import { getStates } from 'services/brasil.service';
 import MomNumberInputComponent from './components/MomNumberInput.component';
 import DadNumberInputComponent from './components/DadNumberInput.component';
+import {
+  getDddAndPhone,
+  getPhoneAndMaskedPhone,
+} from 'utils/helpers/phone.helper';
+import ComplementInputComponent from './components/ComplementInput.component';
 
 const genders: GenderModel[] = [
   { name: 'Masculino', acronym: 'M' },
@@ -80,6 +82,9 @@ export default function StudentScreen() {
       birthUf: '',
       gender: '',
       genderAcronym: '',
+      complement: '',
+      dadMaskedNumber: '',
+      momMaskedNumber: '',
     },
   });
 
@@ -129,7 +134,7 @@ export default function StudentScreen() {
     const { error, data } = await supabase
       .from('aluno')
       .select(
-        'str_nomealuno, dte_nascimento, str_sexo, str_endereco, int_numeroend, str_bairro, str_natestado, str_natcidade, str_escola, str_serie, str_periodo, str_nomemae, str_enderecocomercialmae, str_nomepai, str_enderecocomercialpai, bit_ativo'
+        'str_nomealuno, dte_nascimento, str_sexo, str_endereco, int_numeroend, str_bairro, str_natestado, str_natcidade, str_escola, str_serie, str_periodo, str_nomemae, str_enderecocomercialmae, str_nomepai, str_enderecocomercialpai, bit_ativo, bnt_nrdocumento, int_dddmae, int_telefonemae, int_dddpai, int_telefonepai, str_complemento'
       )
       .eq('id_aluno', params?.id);
 
@@ -143,8 +148,10 @@ export default function StudentScreen() {
     form.setValue('name', student.str_nomealuno);
     form.setValue('genderAcronym', str_sexo);
     form.setValue('street', student.str_endereco);
+    form.setValue('number', `${student.bnt_nrdocumento ?? ''}`);
     form.setValue('houseNumber', `${student.int_numeroend}`);
     form.setValue('district', student.str_bairro);
+    form.setValue('complement', student.str_complemento);
     form.setValue('birthUf', str_natestado ?? '');
     form.setValue('birthCity', student.str_natcidade ?? '');
     form.setValue('school', student.str_escola ?? '');
@@ -153,6 +160,22 @@ export default function StudentScreen() {
     form.setValue('mom', student.str_nomemae ?? '');
     form.setValue('dad', student.str_nomepai ?? '');
     form.setValue('momBusinessAddress', student.str_enderecocomercialmae ?? '');
+
+    const [momNumber, momMaskedNumber] = getPhoneAndMaskedPhone(
+      student.int_dddmae,
+      student.int_telefonemae
+    );
+
+    form.setValue('momNumber', momNumber);
+    form.setValue('momMaskedNumber', momMaskedNumber);
+
+    const [dadNumber, dadMaskedNumber] = getPhoneAndMaskedPhone(
+      student.int_dddpai,
+      student.int_telefonepai
+    );
+
+    form.setValue('dadNumber', dadNumber);
+    form.setValue('dadMaskedNumber', dadMaskedNumber);
 
     const gender = genders.find((gender) => (gender.acronym = str_sexo));
     form.setValue('gender', gender?.name ?? '');
@@ -177,29 +200,34 @@ export default function StudentScreen() {
     const [day, month, year] = data.birthDate.split('/');
     const birthDate = new Date(+day, +month - 1, +year);
     const age = getAge(birthDate);
+    const [momDdd, momNumber] = getDddAndPhone(data.momNumber);
+    const [dadDdd, dadNumber] = getDddAndPhone(data.dadNumber);
 
-    const { error } = await supabase
-      .from('aluno')
-      .insert({
-        str_nomealuno: data.name,
-        dte_nascimento: birthDate.toISOString(),
-        str_natestado: data.birthUf,
-        str_natcidade: data.birthCity,
-        int_idade: age,
-        str_sexo: data.genderAcronym,
-        str_endereco: data.street,
-        int_numeroend: +data.houseNumber ?? 0,
-        str_bairro: data.district,
-        str_escola: data.school,
-        str_serie: data.serie,
-        str_periodo: data.period,
-        str_nomemae: data.mom,
-        str_enderecocomercialmae: data.momBusinessAddress,
-        str_nomepai: data.dad,
-        str_enderecocomercialpai: data.dadBusinnessAddress,
-        bit_ativo: true,
-      })
-      .select('id_aluno');
+    const { error } = await supabase.from('aluno').insert({
+      str_nomealuno: data.name,
+      dte_nascimento: birthDate.toISOString(),
+      str_natestado: data.birthUf,
+      str_natcidade: data.birthCity,
+      int_idade: age,
+      str_sexo: data.genderAcronym,
+      str_endereco: data.street,
+      int_numeroend: +data.houseNumber ?? 0,
+      str_bairro: data.district,
+      str_escola: data.school,
+      str_serie: data.serie,
+      str_periodo: data.period,
+      str_nomemae: data.mom,
+      str_enderecocomercialmae: data.momBusinessAddress,
+      str_nomepai: data.dad,
+      str_enderecocomercialpai: data.dadBusinnessAddress,
+      bit_ativo: true,
+      bnt_nrdocumento: data.number,
+      str_complemento: data.complement,
+      int_dddmae: momDdd,
+      int_telefonemae: momNumber,
+      int_dddpai: dadDdd,
+      int_telefonepai: dadNumber,
+    });
 
     if (error) return setError('Erro ao cadastrar aluno');
 
@@ -222,7 +250,7 @@ export default function StudentScreen() {
           <ScrollView showsVerticalScrollIndicator={false}>
             <FormProvider {...form}>
               <NumberInputComponent style={{ flex: 1 }} />
-              <StartDateInputComponent />
+              {/* <StartDateInputComponent /> */}
               <Divider style={styles.divider} />
               <NameInputComponent />
               <GenderInputComponent genders={genders} />
@@ -233,18 +261,19 @@ export default function StudentScreen() {
               <Divider style={styles.divider} />
               <StreetInputComponent />
               <HouseNumberInput />
-              <Divider style={styles.divider} />
+              <ComplementInputComponent />
+              <Divider style={styles.divider2} />
               <SchoolInputComponent />
               <SerieInputComponent />
               <PeriodInputComponent />
               <Divider style={styles.divider} />
               <MomInputComponent />
               <MomNumberInputComponent />
-              <MomBusinessAddressInputComponent />
+              {/* <MomBusinessAddressInputComponent /> */}
               <Divider style={styles.divider} />
               <DadInputComponent />
               <DadNumberInputComponent />
-              <DadBusinessAddressInputComponent />
+              {/* <DadBusinessAddressInputComponent /> */}
             </FormProvider>
           </ScrollView>
           {!hasId && <ButtonComponent onPress={submit} style={styles.button} />}
@@ -263,5 +292,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   divider: { marginBottom: 16 },
+  divider2: { marginTop: 20, marginBottom: 16 },
   button: { marginTop: 16 },
 });

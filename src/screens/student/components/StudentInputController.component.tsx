@@ -3,7 +3,7 @@ import StudentForm from '../models/student.form';
 import { KeyboardTypeOptions, StyleProp, ViewStyle } from 'react-native';
 import { TextInputLabelProp } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import { ReactNode } from 'react';
-import InputControllerComponent from 'components/controls/InputController.component';
+import InputControllerComponent from 'components/controllers/InputController.component';
 
 export default function StudentInputControllerComponent<
   TName extends FieldPath<StudentForm>

@@ -6,7 +6,7 @@ import {
 } from 'react-native-paper/lib/typescript/components/TextInput/types';
 import { ReactNode } from 'react';
 import TutorForm from '../models/tutor.form';
-import InputControllerComponent from 'components/controls/InputController.component';
+import InputControllerComponent from 'components/controllers/InputController.component';
 
 export default function TutorInputControllerComponent<
   TName extends FieldPath<TutorForm>

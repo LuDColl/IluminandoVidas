@@ -1,12 +1,11 @@
-import StudentInputControllerComponent from './StudentInputController.component';
+import StudentPhoneInputControllerComponent from './StudentPhoneInputController.component';
 
 export default function MomNumberInputComponent() {
   return (
-    <StudentInputControllerComponent
-      name="momNumber"
-      rules={{ required: 'Número da Mãe obrigatório' }}
+    <StudentPhoneInputControllerComponent
+      maskedName="momMaskedNumber"
+      unmaskedName="momNumber"
       label="Número"
-      keyboardType="numeric"
     />
   );
 }

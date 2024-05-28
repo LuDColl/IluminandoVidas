@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import TutorAppbarComponent from './components/TutorAppBar.component';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import ControllerComponent from 'components/Controller.component';
-import MaskInput, { Masks } from 'react-native-mask-input';
 import { supabase } from 'utils/supabase';
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
@@ -14,6 +13,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import SnackbarContextComponet from 'components/SnackbarContext.component';
 import TutorPasswordInputControllerComponent from './components/TutorPasswordInputController.conponent';
+import {
+  getDddAndPhone,
+  getPhoneAndMaskedPhone,
+} from 'utils/helpers/phone.helper';
+import PhoneInputComponent from './components/PhoneInput.component';
 
 export default function TutorScreen() {
   const [error, setError] = useState<string | null>(null);
@@ -70,27 +74,24 @@ export default function TutorScreen() {
 
     const { setValue } = form;
     const [tutor] = data;
-    const { int_ddd, int_telefone } = tutor;
     setValue('name', tutor.str_nome);
     setValue('address', tutor.str_endereco);
     setValue('user', tutor.str_usuario);
     setValue('admin', tutor.bit_adm);
 
-    const phone = `${int_ddd}${int_telefone}`;
-    setValue('phone', phone);
+    const [phone, maskedPhone] = getPhoneAndMaskedPhone(
+      tutor.int_ddd,
+      tutor.int_telefone
+    );
 
-    const phoneNumbers = `${int_telefone}`;
-    const firstNumbers = phoneNumbers.substring(0, 5);
-    const lastNumbers = phoneNumbers.substring(5);
-    const maskedPhone = `(${int_ddd}) ${firstNumbers}-${lastNumbers}`;
+    setValue('phone', phone);
     setValue('maskedPhone', maskedPhone);
   };
 
   const submit = form.handleSubmit(
     async ({ name, phone, address, user, password, admin }) => {
-      const ddd = phone.substring(0, 2);
-      phone = phone.substring(2);
       setLoading(true);
+      const [ddd, phoneNumber] = getDddAndPhone(phone);
 
       const encryptedPassword = await digestStringAsync(
         CryptoDigestAlgorithm.SHA512,
@@ -99,8 +100,8 @@ export default function TutorScreen() {
 
       const { error } = await supabase.from('tutor').insert({
         str_nome: name,
-        int_ddd: +ddd,
-        int_telefone: +phone,
+        int_ddd: ddd,
+        int_telefone: phoneNumber,
         str_endereco: address,
         str_usuario: user,
         str_senha: encryptedPassword,
@@ -130,26 +131,7 @@ export default function TutorScreen() {
               label="Nome"
               rules={{ required: 'Nome obrigatório' }}
             />
-            <TutorInputControllerComponent
-              name="maskedPhone"
-              label="Telefone"
-              keyboardType="numeric"
-              rules={{
-                required: 'Telefone obrigatório',
-                minLength: { value: 15, message: 'Telefone Inválido' },
-              }}
-              render={(props) => (
-                <MaskInput
-                  {...props}
-                  mask={Masks.BRL_PHONE}
-                  onChangeText={(masked, unmasked) => {
-                    if (!props?.onChangeText) return;
-                    props.onChangeText(masked);
-                    form.setValue('phone', unmasked);
-                  }}
-                />
-              )}
-            />
+            <PhoneInputComponent />
             <TutorInputControllerComponent
               name="address"
               label="Endereço"
