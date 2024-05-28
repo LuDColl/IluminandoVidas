@@ -6,7 +6,8 @@ export type RootStackParamList = {
   Cities: { uf: string };
   Login: any;
   Home: TutorResponse;
-  Tutor: any;
+  Tutor?: { id: number };
+  Tutors: any;
   Students: any;
 };
 

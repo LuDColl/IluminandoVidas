@@ -38,7 +38,7 @@ const genders: GenderModel[] = [
   { name: 'Feminino', acronym: 'F' },
 ];
 
-export default function RegisterScreen() {
+export default function StudentScreen() {
   const [states, setStates] = useState<StateResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

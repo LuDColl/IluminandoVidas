@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import TutorForm from './models/tutor.form';
 import TutorInputControllerComponent from './components/TutorInputController.component';
-import { Button, Divider, Switch, Text } from 'react-native-paper';
+import { Button, Divider, ProgressBar, Switch, Text } from 'react-native-paper';
 import { useEffect, useState } from 'react';
 import TutorAppbarComponent from './components/TutorAppBar.component';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -9,24 +9,26 @@ import ControllerComponent from 'components/Controller.component';
 import MaskInput, { Masks } from 'react-native-mask-input';
 import { supabase } from 'utils/supabase';
 import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
-import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import SnackbarContextComponet from 'components/SnackbarContext.component';
 
 export default function TutorScreen() {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Tutor'>>();
 
   const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, 'Tutor'>
-    >();
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Tutor'>>();
 
   const form = useForm<TutorForm>({
     defaultValues: { confirmPassword: '', password: '', user: '' },
   });
 
   useEffect(() => {
+    getTutor();
+
     const subscription = form.watch(({ confirmPassword }, { name }) => {
       if (!form.formState.isSubmitted) return;
       if (name != 'password') return;
@@ -38,6 +40,40 @@ export default function TutorScreen() {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  const getTutor = async () => {
+    if (!params?.id) return;
+
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from('tutor')
+      .select(
+        'str_nome, int_ddd, int_telefone, str_endereco, str_usuario, bit_adm'
+      );
+
+    setLoading(false);
+    if (error) return setError('Erro ao carregar tutor');
+
+    if (!data || data.length === 0) return;
+
+    const { setValue } = form;
+    const [tutor] = data;
+    const { int_ddd, int_telefone } = tutor;
+    setValue('name', tutor.str_nome);
+    setValue('address', tutor.str_endereco);
+    setValue('user', tutor.str_usuario);
+    setValue('admin', tutor.bit_adm);
+
+    const phone = `${int_ddd}${int_telefone}`;
+    setValue('phone', phone);
+
+    const phoneNumbers = `${int_telefone}`;
+    const firstNumbers = phoneNumbers.substring(0, 5);
+    const lastNumbers = phoneNumbers.substring(5);
+    const maskedPhone = `(${int_ddd}) ${firstNumbers}-${lastNumbers}`;
+    setValue('maskedPhone', maskedPhone);
+  };
 
   const submit = form.handleSubmit(
     async ({ name, phone, address, user, password, admin }) => {
@@ -66,8 +102,13 @@ export default function TutorScreen() {
   );
 
   return (
-    <SnackbarContextComponet setMessage={setError} message={error}>
+    <SnackbarContextComponet
+      setMessage={setError}
+      message={error}
+      style={styles.container}
+    >
       <TutorAppbarComponent />
+      {loading && <ProgressBar indeterminate={true} />}
       <View style={styles.body}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <FormProvider {...form}>
@@ -106,27 +147,31 @@ export default function TutorScreen() {
               label="Usuário"
               rules={{ required: 'Usuário obrigatório' }}
             />
-            <TutorInputControllerComponent
-              name="password"
-              label="Senha"
-              keyboardType="visible-password"
-              secureTextEntry={true}
-              rules={{ required: 'Senha Obrigatória' }}
-            />
-            <TutorInputControllerComponent
-              name="confirmPassword"
-              label="Confirmar Senha"
-              keyboardType="visible-password"
-              secureTextEntry={true}
-              rules={{
-                required: 'Usuário obrigatório',
-                validate: (confirmPassword, { password }) => {
-                  if (confirmPassword != password)
-                    return 'Senhas devem ser iguais';
-                  return true;
-                },
-              }}
-            />
+            {!params?.id && (
+              <>
+                <TutorInputControllerComponent
+                  name="password"
+                  label="Senha"
+                  keyboardType="visible-password"
+                  secureTextEntry={true}
+                  rules={{ required: 'Senha Obrigatória' }}
+                />
+                <TutorInputControllerComponent
+                  name="confirmPassword"
+                  label="Confirmar Senha"
+                  keyboardType="visible-password"
+                  secureTextEntry={true}
+                  rules={{
+                    required: 'Usuário obrigatório',
+                    validate: (confirmPassword, { password }) => {
+                      if (confirmPassword != password)
+                        return 'Senhas devem ser iguais';
+                      return true;
+                    },
+                  }}
+                />
+              </>
+            )}
             <ControllerComponent
               control={form.control}
               name="admin"
@@ -151,7 +196,9 @@ export default function TutorScreen() {
     </SnackbarContextComponet>
   );
 }
+
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   body: {
     flex: 1,
     paddingHorizontal: 16,
