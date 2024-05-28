@@ -28,7 +28,7 @@ export default function StudentsScreen() {
       getKey={({ id_aluno }) => id_aluno}
       getText={({ str_nomealuno }) => str_nomealuno}
       noData="Nenhum aluno encontrado"
-      onPress={({ id_aluno }) => navigation.push('Register', { id: id_aluno })}
+      onPress={({ id_aluno }) => navigation.push('Student', { id: id_aluno })}
       onRefresh={getStudents}
       placeholder="Digite o nome do aluno"
       icon="account-circle"
