@@ -5,6 +5,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import SearchComponent from 'components/Search.component';
 import SnackbarContextComponet from 'components/SnackbarContext.component';
+import { StyleSheet, View } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default function TutorsScreen() {
   const [tutors, setTutors] = useState<any[] | null>(null);
@@ -27,17 +29,33 @@ export default function TutorsScreen() {
   };
 
   return (
-    <SnackbarContextComponet setMessage={setError} message={error}>
-      <SearchComponent
-        items={tutors}
-        getKey={({ id_tutor }) => id_tutor}
-        getText={({ str_nome }) => str_nome}
-        noData="Nenhum tutor encontrado"
-        onPress={({ id_tutor }) => navigation.push('Tutor', { id: id_tutor })}
-        onRefresh={getTutors}
-        placeholder="Digite o nome do tutor"
-        icon="account-circle"
-      />
-    </SnackbarContextComponet>
+    <View style={styles.container}>
+      <SnackbarContextComponet setMessage={setError} message={error}>
+        <SearchComponent
+          items={tutors}
+          getKey={({ id_tutor }) => id_tutor}
+          getText={({ str_nome }) => str_nome}
+          noData="Nenhum tutor encontrado"
+          onPress={({ id_tutor }) => navigation.push('Tutor', { id: id_tutor })}
+          onRefresh={getTutors}
+          placeholder="Digite o nome do tutor"
+          icon="account-circle"
+        />
+      </SnackbarContextComponet>
+      <Button
+        style={styles.button}
+        contentStyle={styles.buttonContent}
+        mode="elevated"
+        onPress={() => navigation.push('Tutor')}
+      >
+        Cadastrar
+      </Button>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'space-between' },
+  button: { margin: 16 },
+  buttonContent: { height: 48 },
+});
