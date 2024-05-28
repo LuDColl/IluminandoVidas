@@ -13,11 +13,13 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from 'router';
 import SnackbarContextComponet from 'components/SnackbarContext.component';
+import TutorPasswordInputControllerComponent from './components/TutorPasswordInputController.conponent';
 
 export default function TutorScreen() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { params } = useRoute<RouteProp<RootStackParamList, 'Tutor'>>();
+  const hasId = !!params?.id;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Tutor'>>();
@@ -51,7 +53,7 @@ export default function TutorScreen() {
   }, []);
 
   const getTutor = async () => {
-    if (!params?.id) return;
+    if (!hasId) return;
 
     setLoading(true);
 
@@ -158,20 +160,16 @@ export default function TutorScreen() {
               label="Usuário"
               rules={{ required: 'Usuário obrigatório' }}
             />
-            {!params?.id && (
+            {!hasId && (
               <>
-                <TutorInputControllerComponent
+                <TutorPasswordInputControllerComponent
                   name="password"
                   label="Senha"
-                  keyboardType="visible-password"
-                  secureTextEntry={true}
                   rules={{ required: 'Senha Obrigatória' }}
                 />
-                <TutorInputControllerComponent
+                <TutorPasswordInputControllerComponent
                   name="confirmPassword"
                   label="Confirmar Senha"
-                  keyboardType="visible-password"
-                  secureTextEntry={true}
                   rules={{
                     required: 'Usuário obrigatório',
                     validate: (confirmPassword, { password }) => {
@@ -195,15 +193,17 @@ export default function TutorScreen() {
             />
           </FormProvider>
         </ScrollView>
-        <Button
-          mode="elevated"
-          style={styles.button}
-          contentStyle={styles.buttonContent}
-          onPress={submit}
-          loading={loading}
-        >
-          Cadastrar
-        </Button>
+        {!hasId && (
+          <Button
+            mode="elevated"
+            style={styles.button}
+            contentStyle={styles.buttonContent}
+            onPress={submit}
+            loading={loading}
+          >
+            Cadastrar
+          </Button>
+        )}
       </View>
     </SnackbarContextComponet>
   );
