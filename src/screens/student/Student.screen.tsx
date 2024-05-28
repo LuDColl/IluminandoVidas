@@ -198,7 +198,7 @@ export default function StudentScreen() {
 
   const submit = form.handleSubmit(async (data) => {
     const [day, month, year] = data.birthDate.split('/');
-    const birthDate = new Date(+day, +month - 1, +year);
+    const birthDate = new Date(+year, +month - 1, +day);
     const age = getAge(birthDate);
     const [momDdd, momNumber] = getDddAndPhone(data.momNumber);
     const [dadDdd, dadNumber] = getDddAndPhone(data.dadNumber);
